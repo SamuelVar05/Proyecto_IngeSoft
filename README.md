@@ -11,17 +11,17 @@
 La aplicación es una plataforma web y móvil diseñada para mejorar la visibilidad y accesibilidad de las chazas (pequeños negocios dentro del campus) de la Universidad Nacional. Permite a los vendedores registrar sus productos, ubicaciones y precios, mientras que los estudiantes pueden explorar opciones, comparar costos y encontrar las mejores ofertas a través de búsquedas y filtros. La app fomenta la digitalización de estos negocios, promoviendo un ecosistema dinámico y equitativo dentro de la comunidad universitaria.
 
 
-  *Lenguajes de Programación*
+*Lenguajes de Programación*
 
 - Dart 
 - TypeScript
    
-  *Frameworks y Librerías*
+*Frameworks y Librerías*
 
 - Flutter 
 - NestJS 
-- 
-  *Servicios Externos*
+  
+*Servicios Externos*
 
 - PostgreSQL
 - Render 
