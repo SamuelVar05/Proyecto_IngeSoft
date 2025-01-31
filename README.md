@@ -14,12 +14,14 @@ La aplicación es una plataforma web y móvil diseñada para mejorar la visibili
   *Lenguajes de Programación*
 
 - Dart 
-- TypeScript 
- *Frameworks y Librerías*
+- TypeScript
+   
+  *Frameworks y Librerías*
 
 - Flutter 
 - NestJS 
- *Servicios Externos*
+- 
+  *Servicios Externos*
 
 - PostgreSQL
 - Render 
