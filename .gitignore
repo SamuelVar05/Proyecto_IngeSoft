@@ -1,0 +1,22 @@
+# Archivos y carpetas de sistema
+.DS_Store  # macOS
+Thumbs.db  # Windows
+
+# Dependencias globales (en caso de que accidentalmente se instalen en la raíz)
+node_modules/
+vendor/
+
+# Archivos de entorno y configuración sensible
+.env
+.env.local
+
+# Carpetas de construcción y logs
+dist/
+build/
+logs/
+*.log
+
+# Archivos y configuraciones de editores de código
+.vscode/
+.idea/
+*.swp
