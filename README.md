@@ -12,15 +12,18 @@ La aplicación es una plataforma web y móvil diseñada para mejorar la visibili
 
 
   *Lenguajes de Programación*
-Dart 
-TypeScript 
+
+- Dart 
+- TypeScript 
  *Frameworks y Librerías*
-Flutter 
-NestJS 
+
+- Flutter 
+- NestJS 
  *Servicios Externos*
-PostgreSQL
-Render 
-Google Maps API 
-Google Play Console y Apple Developer Program 
+
+- PostgreSQL
+- Render 
+- Google Maps API 
+- Google Play Console y Apple Developer Program 
 
 
