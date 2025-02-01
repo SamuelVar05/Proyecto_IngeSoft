@@ -20,3 +20,6 @@ logs/
 .vscode/
 .idea/
 *.swp
+
+# Prueba de código limpio
+Proyecto/Frontend/chazapp/lib/test_clean_code.dart
