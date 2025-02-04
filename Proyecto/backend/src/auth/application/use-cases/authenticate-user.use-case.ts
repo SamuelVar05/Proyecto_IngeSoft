@@ -1,6 +1,9 @@
 import { Inject } from '@nestjs/common';
 import { AuthService } from 'src/auth/domain/ports/auth.service';
+import { LoginUserDto } from 'src/auth/interface/dto/login-user.dto';
 import { UserRepository } from 'src/user/domain/ports/user.repository';
+import { ErrorManager } from 'utils/ErrorManager';
+import { LoginUserResponseDto } from './dtos/login-user-response.dto';
 
 export class AuthenticateUserUseCase {
   constructor(
@@ -9,19 +12,31 @@ export class AuthenticateUserUseCase {
     @Inject('AuthService')
     private readonly authService: AuthService,
   ) {}
-  async execute(email: string, password: string) {
+  async execute(
+    email: string,
+    password: string,
+  ): Promise<LoginUserResponseDto> {
     const user = await this.userRepository.findUserByEmail(email);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new ErrorManager({
+        message: 'User not found',
+        type: 'UNAUTHORIZED',
+      });
     }
+
     const isValidPassword = await this.authService.comparePasswords(
       password,
       user.password,
     );
+
     if (!isValidPassword) {
-      throw new Error('Invalid password');
+      throw new ErrorManager({
+        message: 'Invalid password',
+        type: 'UNAUTHORIZED',
+      });
     }
-    return this.authService.generateToken(user.id);
+    const jwtToken = this.authService.generateToken(user.id);
+    return { token: jwtToken };
   }
 }
