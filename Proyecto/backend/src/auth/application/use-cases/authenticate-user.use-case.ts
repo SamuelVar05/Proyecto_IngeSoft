@@ -16,27 +16,31 @@ export class AuthenticateUserUseCase {
     email: string,
     password: string,
   ): Promise<LoginUserResponseDto> {
-    const user = await this.userRepository.findUserByEmail(email);
+    try {
+      const user = await this.userRepository.findUserByEmail(email);
 
-    if (!user) {
-      throw new ErrorManager({
-        message: 'User not found',
-        type: 'UNAUTHORIZED',
-      });
+      if (!user) {
+        throw new ErrorManager({
+          message: 'User not found',
+          type: 'UNAUTHORIZED',
+        });
+      }
+
+      const isValidPassword = await this.authService.comparePasswords(
+        password,
+        user.password,
+      );
+
+      if (!isValidPassword) {
+        throw new ErrorManager({
+          message: 'Invalid password',
+          type: 'UNAUTHORIZED',
+        });
+      }
+      const jwtToken = this.authService.generateToken(user.id);
+      return { token: jwtToken };
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
     }
-
-    const isValidPassword = await this.authService.comparePasswords(
-      password,
-      user.password,
-    );
-
-    if (!isValidPassword) {
-      throw new ErrorManager({
-        message: 'Invalid password',
-        type: 'UNAUTHORIZED',
-      });
-    }
-    const jwtToken = this.authService.generateToken(user.id);
-    return { token: jwtToken };
   }
 }
