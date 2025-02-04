@@ -1,9 +1,7 @@
-// src/auth/infrastructure/services/auth.service.ts
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { AuthService } from 'src/auth/domain/ports/auth.service';
-
 
 @Injectable()
 export class JwtAuthService implements AuthService {
@@ -16,6 +14,6 @@ export class JwtAuthService implements AuthService {
   }
 
   generateToken(userId: string): string {
-    return jwt.sign({ userId }, 'SECRET_KEY', { expiresIn: '1h' });
+    return jwt.sign({ userId }, process.env.SECRET_KEY, { expiresIn: '1h' });
   }
 }
