@@ -23,7 +23,7 @@ export class RegisterUserUseCase {
       const existingUser = await this.userRepository.findUserByEmail(email);
       if (existingUser) {
         throw new ErrorManager({
-          message: ' User already exists',
+          message: 'User already exists',
           type: 'BAD_REQUEST',
         });
       }
@@ -47,10 +47,7 @@ export class RegisterUserUseCase {
         token,
       };
     } catch (error) {
-      throw new ErrorManager({
-        message: error.message,
-        type: 'INTERNAL_SERVER_ERROR',
-      });
+      throw ErrorManager.createSignatureError(error.message);
     }
   }
 }
