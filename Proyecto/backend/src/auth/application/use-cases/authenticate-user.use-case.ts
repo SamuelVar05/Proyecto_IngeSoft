@@ -1,9 +1,12 @@
+import { Inject } from '@nestjs/common';
 import { AuthService } from 'src/auth/domain/ports/auth.service';
 import { UserRepository } from 'src/user/domain/ports/user.repository';
 
 export class AuthenticateUserUseCase {
   constructor(
+    @Inject('IUserRepository')
     private readonly userRepository: UserRepository,
+    @Inject('AuthService')
     private readonly authService: AuthService,
   ) {}
   async execute(email: string, password: string) {
