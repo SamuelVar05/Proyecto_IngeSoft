@@ -9,7 +9,7 @@ vendor/
 # Archivos de entorno y configuración sensible
 .env
 .env.local
-
+.env.*
 # Carpetas de construcción y logs
 dist/
 build/
