@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { DataSourceConfig } from './config/data.source';
 import { ProductModule } from './product/product.module';
+import { ImageModule } from './images/images.module';
 
 console.log(`NodeEnv : ${process.env.NODE_ENV?.trim()}`);
 const envFilePath =
@@ -22,6 +23,7 @@ const envFilePath =
     AuthModule,
     UserModule,
     ProductModule,
+    ImageModule
   ],
   controllers: [AppController],
   providers: [AppService],
