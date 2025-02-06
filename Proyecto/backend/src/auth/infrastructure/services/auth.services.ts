@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { JwtPayloadDto } from 'src/auth/domain/dtos/jwt-payload.dto';
 import { AuthService } from 'src/auth/domain/ports/auth.service';
 
 @Injectable()
@@ -15,5 +16,18 @@ export class JwtAuthService implements AuthService {
 
   generateToken(userId: string): string {
     return jwt.sign({ userId }, process.env.SECRET_KEY, { expiresIn: '1h' });
+  }
+
+  validateToken(token: string): string | JwtPayloadDto {
+    try {
+      const tokenValidate = jwt.verify(
+        token,
+        process.env.SECRET_KEY,
+      ) as JwtPayloadDto;
+      console.log(`token validate ${tokenValidate}`);
+      return tokenValidate;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid Token');
+    }
   }
 }
