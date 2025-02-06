@@ -2,6 +2,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RegisterUserResponseDto } from 'src/auth/application/use-cases/dtos/register-user-response.dto';
 import { AuthService } from 'src/auth/domain/ports/auth.service';
+import { UserBuilder } from 'src/user/domain/builders/user.builder';
 import { User } from 'src/user/domain/entities/user.entity';
 import { UserRepository } from 'src/user/domain/ports/user.repository';
 import { ErrorManager } from 'utils/ErrorManager';
@@ -30,9 +31,11 @@ export class RegisterUserUseCase {
 
       //hashed password
       const hashedPassword = await this.authService.hashPassword(password);
-      const newUser = new User();
-      newUser.email = email;
-      newUser.password = hashedPassword;
+
+      const newUser = new UserBuilder()
+        .setEmail(email)
+        .setPassword(hashedPassword)
+        .build();
 
       //create the user in the database
       await this.userRepository.createUser(newUser);
