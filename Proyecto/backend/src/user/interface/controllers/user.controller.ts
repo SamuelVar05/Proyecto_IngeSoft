@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { RegisterUserUseCase } from 'src/user/application/use-cases/register-user.use-case';
 import { RegisterUserDto } from '../dtos/register-user.dto';
 import { ApiResponse } from 'types/ApiResponse';
@@ -8,11 +8,30 @@ import {
   ApiResponse as SwaggerResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/infrastructure/guards/Jwt-auth.guard';
 
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private readonly registerUserUseCase: RegisterUserUseCase) {}
+
+  @UseGuards(AuthGuard)
+  @Get('testoperation')
+  @ApiOperation({ summary: 'Test endpoint' })
+  @SwaggerResponse({
+    status: 200,
+    description: 'Test operation successful',
+    schema: {
+      example: {
+        data: 'test operation',
+      },
+    },
+  })
+  async testOperation() {
+    return {
+      data: 'testt operation',
+    };
+  }
 
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
