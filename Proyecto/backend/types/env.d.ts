@@ -7,5 +7,8 @@ declare namespace NodeJS {
     DB_PASSWORD: string;
     DB_NAME: string;
     SECRET_KEY: string;
+    SUPABASE_URL: string;
+    SUPABASE_KEY: string;
+    SUPABASE_BUCKET_NAME: string;
   }
 }
