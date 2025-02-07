@@ -14,6 +14,13 @@ export class Product {
   })
   price: number;
 
+  @Column({
+    nullable: true,
+  })
+  barcode: string;
+
+  
+
   @ManyToOne(() => Category, (category) => category.products)
   category: Category;
 }

@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { JwtPayloadDto } from 'src/auth/domain/dtos/jwt-payload.dto';
 import { AuthService } from 'src/auth/domain/ports/auth.service';
