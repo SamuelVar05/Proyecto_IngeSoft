@@ -1,117 +1,47 @@
-<h1 align="left">Repositorio grupal - Ingeniería de software 1 - 2024-2 Grupo #6</h1>
+# 🚀 Repositorio grupal - Ingeniería de Software 1 - 2024-2 Grupo #6
+## 👥 Integrantes del equipo
 
-###
+- 👩‍💻 Ana María González Hernández - anagonzalezhe@unal.edu.co
+- 👨‍💻 Daniel Felipe Soracipa Torres - dsoracipa@unal.edu.co
+- 👨‍💻 Juan José Medina Guerrero - jmedinagu@unal.edu.co
+- 👨‍💻 Samuel Josué Vargas Castro - samvargasca@unal.edu.co
 
-<h3 align="left">🔶Integrantes del equipo</h3>
 
-###
+## 📌 UN Chaza
 
-<p align="left">🔸 Ana María González Hernández - anagonzalezhe@unal.edu.co<br> 🔸Daniel Felipe Soracipa - dsoracipa@unal.edu.co<br> 🔸Juan José Medina Guerrero - jmedinagu@unal.edu.co<br> 🔸Samuel Josué Vargas Castro - samvargasca@unal.edu.co</p>
-
-###
-
-<h3 align="left">🔶Nombre del proyecto</h3>
-
-###
-
-<p align="left">UN Chaza</p>
-
-###
-
-<br clear="both">
-
-<div align="left">
+<div align="center">
   <img height="200" src="logo.png"  />
 </div>
 
-###
 
-<h3 align="left">🔶Objetivo del proyecto</h3>
+## 🎯 Objetivo del Proyecto
 
-###
+**UN Chaza** es una aplicación móvil diseñada para mejorar la visibilidad y accesibilidad de las *chazas* (pequeños negocios dentro del campus) de la Universidad Nacional.
 
-<p align="left">UN Chaza es una aplicación móvil que tiene como objetivo principal mejorar la visibilidad y accesibilidad de las chazas (pequeños negocios dentro del campus) de la Universidad Nacional. Esto permitirá que los dueños de estos puestos aumenten su clientela al exponer sus productos y su ubicación de manera digital, incentivando una competencia saludable y facilitando la toma de decisiones de los estudiantes.<br>Por otro lado, los estudiantes obtendrán una plataforma donde pueden explorar opciones, comparar precios, productos, y ubicaciones, optimizando su experiencia dentro del campus. Esta solución fomenta la digitalización de pequeños negocios y crea un ecosistema dinámico que beneficia tanto a los vendedores como a los consumidores.</p>
+🔹 **Para los vendedores**: Permite aumentar la clientela exponiendo sus productos y ubicación de manera digital, fomentando una competencia saludable.
 
-###
+🔹 **Para los estudiantes**: Facilita la exploración de opciones, comparación de precios y productos, optimizando su experiencia dentro del campus.
 
-<h3 align="left">🔶Tecnologías utilizadas</h3>
+Esta solución impulsa la digitalización de pequeños negocios y crea un ecosistema dinámico que beneficia a todos los usuarios.
 
-###
+---
 
-<h4 align="left">Front End</h4>
+## 🛠️ Tecnologías utilizadas
 
-###
+### 🌐 Frontend
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
 
-<h5 align="left">🔸Lenguajes de programación</h5>
+### ⚙️ Backend
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 
-###
+### ☁️ Infraestructura y Servicios
+![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
+![Google Maps API](https://img.shields.io/badge/Google%20Maps%20API-4285F4?style=for-the-badge&logo=google-maps&logoColor=white)
+![Google Play Console](https://img.shields.io/badge/Google%20Play%20Console-34A853?style=for-the-badge&logo=google-play&logoColor=white)
+![Apple Developer](https://img.shields.io/badge/Apple%20Developer-000000?style=for-the-badge&logo=apple&logoColor=white)
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" height="40" alt="dart logo"  />
-</div>
+---
 
-###
-
-<h5 align="left">🔸Framework</h5>
-
-###
-
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" height="40" alt="flutter logo"  />
-</div>
-
-###
-
-<h4 align="left">Backend</h4>
-
-###
-
-<h5 align="left">🔸Lenguajes de programación</h5>
-
-###
-
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo"  />
-</div>
-
-###
-
-<h5 align="left">🔸Framework</h5>
-
-###
-
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg" height="40" alt="nestjs logo"  />
-</div>
-
-###
-
-<h5 align="left">🔸Base de datos</h5>
-
-###
-
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="40" alt="postgresql logo"  />
-</div>
-
-###
-
-<h5 align="left">🔸Servidor</h5>
-
-###
-
-<p align="left">Render</p>
- <img src="https://thereadable.co/wp-content/uploads/2024/11/Render_logo_-_Black.jpg" height="40" alt="render logo"  />
-
-###
-
-
-<h5 align="left">🔸Otros servicios externos</h5>
-
-###
-
-<p align="left">Google Maps API</p>
-<p align="left">Google Play Console y Apple Developer Program</p>
-
-
-###
