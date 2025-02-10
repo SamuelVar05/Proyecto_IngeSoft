@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { DataSourceConfig } from './config/data.source';
 import { ProductModule } from './product/product.module';
 import { ImageModule } from './images/images.module';
+import { ChazaModule } from './chaza/chaza.module';
 
 console.log(`NodeEnv : ${process.env.NODE_ENV?.trim()}`);
 const envFilePath =
@@ -23,7 +24,8 @@ const envFilePath =
     AuthModule,
     UserModule,
     ProductModule,
-    ImageModule
+    ImageModule,
+    ChazaModule
   ],
   controllers: [AppController],
   providers: [AppService],

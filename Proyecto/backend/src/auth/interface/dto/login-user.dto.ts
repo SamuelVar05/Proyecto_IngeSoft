@@ -14,6 +14,6 @@ export class LoginUserDto {
   @IsString({
     message: 'Password must be a string',
   })
-  @MinLength(6)
+  @MinLength(6) 
   password: string;
 }
