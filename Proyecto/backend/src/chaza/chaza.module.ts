@@ -5,10 +5,11 @@ import {CreateChazaUseCase} from './application/use-cases/create-chaza.use-case'
 import { ChazaController } from './interface/controllers/chaza.controller';
 import { TypeOrmChazaRepository } from './infrastructure/repositories/chaza.repository';
 import { AuthModule } from '../auth/auth.module';
+import { UserModule } from 'src/user/user.module';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Chaza])],
+  imports: [TypeOrmModule.forFeature([Chaza]),UserModule,forwardRef(() => AuthModule)],
   providers: [
     {
       provide: 'IChazaRepository',

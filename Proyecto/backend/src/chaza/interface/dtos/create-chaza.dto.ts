@@ -32,7 +32,7 @@ export class CreateChazaDto {
   })
   @IsOptional()
   @IsString()
-  ubicacion?: string;
+  ubicacion: string;
 
   @ApiProperty({
     example: 1,

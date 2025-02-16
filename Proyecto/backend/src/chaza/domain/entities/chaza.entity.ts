@@ -9,13 +9,13 @@ export class Chaza {
   @ManyToOne(() => User)
   id_usuario: User;
 
-  @Column({ nullable: true })
+  @Column()
   nombre: string;
 
-  @Column({ nullable: true })
+  @Column()
   descripcion: string;
 
-  @Column({ nullable: true })
+  @Column()
   ubicacion: string;
 
   @Column({ nullable: true })
