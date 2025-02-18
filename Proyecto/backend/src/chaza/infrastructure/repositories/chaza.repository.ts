@@ -17,6 +17,12 @@ export class TypeOrmChazaRepository implements ChazaRepository {
     await this.chazaRepository.save(chaza);
   }
 
-
+  // async findChazaById(id: string): Promise<Chaza | null> {
+  //   return this.chazaRepository.findOneBy( { id });
+  // }
+  async findChazaById(id: string): Promise<Chaza | null> {
+    return this.chazaRepository.findOne({ where: { id } });
+  }
+  
  
 }

@@ -1,4 +1,4 @@
-export interface CreateChazaResponseDto {
+export interface findChazaByIdChazaResponseDto {
   chaza: {
     chazaId: string;
     nombre: string;
