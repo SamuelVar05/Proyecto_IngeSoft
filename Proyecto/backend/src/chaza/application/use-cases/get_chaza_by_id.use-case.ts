@@ -12,9 +12,10 @@ export class GetChazaByIdUseCase {
     private readonly chazaRepository: ChazaRepository,
   ) {}
 
-  async execute(idChaza: string): Promise<findChazaByIdChazaResponseDto>  {
+  async execute(idChaza: string): Promise<findChazaByIdChazaResponseDto> {
     try {
       const chaza = await this.chazaRepository.findChazaById(idChaza);
+
       if (!chaza) {
         throw new ErrorManager({
           message: 'La chaza con el ID proporcionado no existe.',
@@ -22,14 +23,7 @@ export class GetChazaByIdUseCase {
         });
       }
       return {
-        chaza: {
-          chazaId: chaza.id,
-          nombre: chaza.nombre,
-          descripcion: chaza.descripcion,
-          ubicacion: chaza.ubicacion,
-          foto_id: chaza.foto_id,
-          id_usuario: chaza.id_usuario.id,
-        },
+        chaza,
       };
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
