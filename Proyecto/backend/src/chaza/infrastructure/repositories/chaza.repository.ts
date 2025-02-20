@@ -35,5 +35,7 @@ export class TypeOrmChazaRepository implements ChazaRepository {
     await this.chazaRepository.update(id, updateData);
     return updateData
   }
- 
+
+  async deleteChaza(id: string): Promise<void> {
+    await this.chazaRepository.delete(id);}
 }

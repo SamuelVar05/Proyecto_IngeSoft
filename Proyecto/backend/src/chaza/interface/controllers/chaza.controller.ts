@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Headers, Param, Get, NotFoundException, InternalServerErrorException, BadRequestException,Put } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Headers, Param, Get,Delete, NotFoundException, InternalServerErrorException, BadRequestException,Put } from '@nestjs/common';
 import { CreateChazaUseCase } from 'src/chaza/application/use-cases/create-chaza.use-case';
 import { CreateChazaDto } from '../dtos/create-chaza.dto';
 import { ApiResponse } from 'types/ApiResponse';
@@ -14,12 +14,14 @@ import { findChazaByIdChazaResponseDto } from './find-chaza-by-id-response.dto';
 import { UpdateChazaUseCase } from 'src/chaza/application/use-cases/update-chaza.use-case';
 import { UpdateChazaResponseDto } from './update-chaza-response.dto';
 import { UpdateChazaDto } from '../dtos/update-chaza.dto';
+import { DeleteChazaUseCase } from 'src/chaza/application/use-cases/delete-chaza.use-case';
 // import { UpdateChazaDto } from ;
+import {DeleteChazaResponseDto} from './delete-chaza-response.dto';
 
 @ApiTags('Chazas')
 @Controller('chazas')
 export class ChazaController {
-  constructor(private readonly createChazaUseCase: CreateChazaUseCase, private readonly getChazaUseCase:GetChazaByIdUseCase,private readonly updateChazaUseCase: UpdateChazaUseCase ) {}
+  constructor(private readonly createChazaUseCase: CreateChazaUseCase, private readonly getChazaUseCase:GetChazaByIdUseCase,private readonly updateChazaUseCase: UpdateChazaUseCase, readonly deleteChazaUseCase: DeleteChazaUseCase ) {}
 
   @Post('/')
   @UseGuards(AuthGuard)
@@ -56,7 +58,7 @@ export class ChazaController {
   
   async createChaza(
     @Body() body: CreateChazaDto,
-    // @Headers('Authorization') token: string,
+    
   ): Promise<ApiResponse<CreateChazaResponseDto>> {
     const responseUseCase = await this.createChazaUseCase.execute(
       body.nombre,
@@ -76,7 +78,7 @@ export class ChazaController {
 
   // ----------------------------------------
 
-  // constructor(private readonly getChazaUseCase:GetChazaByIdUseCase ) {}
+
   @Get('/:idChaza')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Get chaza details' })
@@ -121,31 +123,15 @@ export class ChazaController {
     },
   })
   async getChaza(@Param('idChaza') idChaza: string): Promise<ApiResponse<findChazaByIdChazaResponseDto>> {
-    try {
-      console.log(idChaza);
-      // const a = typeof idChaza;
-      // console.log(a);
+
       const chaza = await this.getChazaUseCase.execute(idChaza);
-      // console.log(chaza);
-      // console.log(idChaza);
-      if (!chaza) {
-        throw new NotFoundException({
-          status: 'error',
-          message: 'La chaza con el ID proporcionado no existe.',
-        });
-      }
+  
       return {
         success: true,
         data: chaza,
         message: 'Chaza find successfully',
       };
-    } catch (error) {
-      throw new InternalServerErrorException({
-        status: 'error',
-        message: 'No se pudo encontrar la chaza debido a un error interno.assadasdasdsadsadsad',
-        
-      });
-    }
+
   }
 
   // -------------------------------------
@@ -193,35 +179,68 @@ export class ChazaController {
     },
   })
   async updateChaza(@Param('idChaza') idChaza: string, @Body() body: UpdateChazaDto): Promise<ApiResponse<UpdateChazaResponseDto>> {
-    try {
-      // if (!body.nombre && !body.descripcion && !body.horario) {
-      //   throw new BadRequestException({
-      //     status: 'error',
-      //     message: 'Datos inválidos. Por favor verifica los campos requeridos.',
-      //   });
-      // }
+    
+ 
 
       const updatedChaza = await this.updateChazaUseCase.execute(idChaza,body.descripcion,body.nombre,body.ubicacion,body.foto_id,body.id_usuario.toString()); 
-
-      if (!updatedChaza) {
-        throw new NotFoundException({
-          status: 'error',
-          message: 'La chaza con el ID proporcionado no existe.',
-        });
-      }
 
       return {
         success: true,
         data: updatedChaza,
         message: 'Chaza updated successfully',
       };
-    } catch (error) {
-      throw new InternalServerErrorException({
-        status: 'error',
-        message: 'No se pudo actualizar la chaza debido a un error interno.',
-      });
-    }
+
   }
 
+  // -----------------------------------
+  @Delete('/:idChaza')
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Delete an existing chaza' })
+
+  @SwaggerResponse({
+    status: 200,
+    description: 'Chaza successfully deleted',
+    schema: {
+      example: {
+        status: 'success',
+        message: 'Chaza eliminada exitosamente',
+      },
+    },
+  })
+  @SwaggerResponse({
+    status: 404,
+    description: 'Chaza not found',
+    schema: {
+      example: {
+        status: 'error',
+        message: 'La chaza con el ID proporcionado no existe.',
+      },
+    },
+  })
+  @SwaggerResponse({
+    status: 500,
+    description: 'Internal server error',
+    schema: {
+      example: {
+        status: 'error',
+        message: 'No se pudo eliminar la chaza debido a un error interno.',
+      },
+    },
+  })
+  async deleteChaza(
+    @Param('idChaza') idChaza: string
+  ): Promise<ApiResponse<DeleteChazaResponseDto>> {
+    
+      const wasDeleted = await this.deleteChazaUseCase.execute(idChaza);
+
+      return {
+        success: true,
+        data: { message: 'Chaza eliminada exitosamente',
+          status: 'success'
+         },
+        message: 'Chaza deleted successfully',
+      };
+   
+  }
 
 }

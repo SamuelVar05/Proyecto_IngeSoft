@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Delete, Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Chaza } from './domain/entities/chaza.entity';
 import {CreateChazaUseCase} from './application/use-cases/create-chaza.use-case';
@@ -7,8 +7,9 @@ import { TypeOrmChazaRepository } from './infrastructure/repositories/chaza.repo
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from 'src/user/user.module';
 import { GetChazaByIdUseCase } from './application/use-cases/get_chaza_by_id.use-case';
-// import { UpdateChazaDto } from './interface/dtos/update-chaza.dto';
+
 import { UpdateChazaUseCase } from './application/use-cases/update-chaza.use-case';
+import { DeleteChazaUseCase } from './application/use-cases/delete-chaza.use-case';
 
 
 @Module({
@@ -20,7 +21,8 @@ import { UpdateChazaUseCase } from './application/use-cases/update-chaza.use-cas
     },
     CreateChazaUseCase,
     GetChazaByIdUseCase,
-    UpdateChazaUseCase
+    UpdateChazaUseCase, 
+    DeleteChazaUseCase
   ],
   controllers: [ChazaController],
   exports: ['IChazaRepository']
