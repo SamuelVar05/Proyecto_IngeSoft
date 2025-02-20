@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '@supabase/supabase-js';
 import { IsNotEmpty, IsString, IsOptional, IsInt, IsUUID } from 'class-validator';
 
 export class CreateChazaDto {
@@ -7,7 +8,7 @@ export class CreateChazaDto {
     description: 'ID único de la chaza',
   })
   @IsUUID()
-  id_usuario: string;
+  id_usuario: User;
 
 
   @ApiProperty({

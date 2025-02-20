@@ -19,5 +19,5 @@ export class Chaza {
   ubicacion: string;
 
   @Column({ nullable: true })
-  foto_id: number;
+  foto_id: number | undefined;
 }

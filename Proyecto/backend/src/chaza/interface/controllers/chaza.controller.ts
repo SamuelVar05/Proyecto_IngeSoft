@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Headers, Param, Get, NotFoundException, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Headers, Param, Get, NotFoundException, InternalServerErrorException, BadRequestException,Put } from '@nestjs/common';
 import { CreateChazaUseCase } from 'src/chaza/application/use-cases/create-chaza.use-case';
 import { CreateChazaDto } from '../dtos/create-chaza.dto';
 import { ApiResponse } from 'types/ApiResponse';
@@ -11,11 +11,14 @@ import {
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/infrastructure/guards/Jwt-auth.guard';
 import { findChazaByIdChazaResponseDto } from './find-chaza-by-id-response.dto';
+import { UpdateChazaUseCase } from 'src/chaza/application/use-cases/update-chaza.use-case';
+import { UpdateChazaResponseDto } from './update-chaza-response.dto';
+// import { UpdateChazaDto } from ;
 
 @ApiTags('Chazas')
 @Controller('chazas')
 export class ChazaController {
-  constructor(private readonly createChazaUseCase: CreateChazaUseCase, private readonly getChazaUseCase:GetChazaByIdUseCase ) {}
+  constructor(private readonly createChazaUseCase: CreateChazaUseCase, private readonly getChazaUseCase:GetChazaByIdUseCase,private readonly updateChazaUseCase: UpdateChazaUseCase ) {}
 
   @Post('/')
   @UseGuards(AuthGuard)
@@ -144,7 +147,85 @@ export class ChazaController {
     }
   }
 
+  // -------------------------------------
+  @Put('/:idChaza')
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Update an existing chaza' })
+  @SwaggerResponse({
+    status: 200,
+    description: 'Chaza successfully updated',
+    schema: {
+      example: {
+        status: 'success',
+        message: 'Chaza actualizada exitosamente',
+      },
+    },
+  })
+  @SwaggerResponse({
+    status: 400,
+    description: 'Bad request - Invalid input data',
+    schema: {
+      example: {
+        status: 'error',
+        message: 'Datos inválidos. Por favor verifica los campos requeridos.',
+      },
+    },
+  })
+  @SwaggerResponse({
+    status: 404,
+    description: 'Chaza not found',
+    schema: {
+      example: {
+        status: 'error',
+        message: 'La chaza con el ID proporcionado no existe.',
+      },
+    },
+  })
+  @SwaggerResponse({
+    status: 500,
+    description: 'Internal server error',
+    schema: {
+      example: {
+        status: 'error',
+        message: 'No se pudo actualizar la chaza debido a un error interno.',
+      },
+    },
+  })
+  async updateChaza(@Param('idChaza') idChaza: string, @Body() body: CreateChazaDto): Promise<ApiResponse<UpdateChazaResponseDto>> {
+    try {
+      // if (!body.nombre && !body.descripcion && !body.horario) {
+      //   throw new BadRequestException({
+      //     status: 'error',
+      //     message: 'Datos inválidos. Por favor verifica los campos requeridos.',
+      //   });
+      // }
 
+      const updatedChaza = await this.updateChazaUseCase.execute(idChaza, body);
+
+      if (!updatedChaza) {
+        throw new NotFoundException({
+          status: 'error',
+          message: 'La chaza con el ID proporcionado no existe.',
+        });
+      }
+
+      return {
+        chaza: {
+          chazaId: updatedChaza.id,
+          nombre: updatedChaza.nombre,
+          descripcion: updatedChaza.descripcion,
+          ubicacion: updatedChaza.ubicacion,
+          foto_id: updatedChaza.foto_id,
+          id_usuario: updatedChaza.id_usuario.id,
+        },
+      };
+    } catch (error) {
+      throw new InternalServerErrorException({
+        status: 'error',
+        message: 'No se pudo actualizar la chaza debido a un error interno.',
+      });
+    }
+  }
 
 
 }

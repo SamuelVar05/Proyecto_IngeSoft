@@ -23,8 +23,8 @@ export class ChazaBuilder {
     return this;
   }
 
-  setFotoId(foto_id: number): ChazaBuilder {
-    this.chaza.foto_id = foto_id;
+  setFotoId(foto_id: number | undefined): ChazaBuilder {
+    this.chaza.foto_id = foto_id || undefined;
     return this;
   }
 

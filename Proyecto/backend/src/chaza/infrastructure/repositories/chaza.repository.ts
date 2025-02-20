@@ -17,12 +17,23 @@ export class TypeOrmChazaRepository implements ChazaRepository {
     await this.chazaRepository.save(chaza);
   }
 
-  // async findChazaById(id: string): Promise<Chaza | null> {
-  //   return this.chazaRepository.findOneBy( { id });
-  // }
+  
   async findChazaById(id: string): Promise<Chaza | null> {
     return this.chazaRepository.findOne({ where: { id } });
   }
   
+  async updateChaza (id: string, updateData: Chaza): Promise<void | Chaza> {
+    const chaza = await this.chazaRepository.findOne({ where: { id } });
+
+    if (!chaza) {
+      console.log('Chaza not found');
+      return ;
+    }
+
+    // await 
+
+    await this.chazaRepository.update(id, updateData);
+    return updateData
+  }
  
 }
