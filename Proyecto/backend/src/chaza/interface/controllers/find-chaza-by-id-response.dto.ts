@@ -1,10 +1,4 @@
+import { Chaza } from 'src/chaza/domain/entities/chaza.entity';
 export interface findChazaByIdChazaResponseDto {
-  chaza: {
-    chazaId: string;
-    nombre: string;
-    descripcion: string;
-    ubicacion: string;
-    foto_id?: number;
-    id_usuario: string;
-  };
+  chaza: Chaza;
 }
