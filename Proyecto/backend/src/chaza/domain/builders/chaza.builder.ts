@@ -28,7 +28,7 @@ export class ChazaBuilder {
     return this;
   }
 
-  setUsuario(usuario: User): ChazaBuilder {
+  setUsuario(usuario: string): ChazaBuilder {
     this.chaza.id_usuario = usuario;
     return this;
   }

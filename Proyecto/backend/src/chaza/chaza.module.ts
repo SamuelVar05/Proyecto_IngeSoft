@@ -7,6 +7,8 @@ import { TypeOrmChazaRepository } from './infrastructure/repositories/chaza.repo
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from 'src/user/user.module';
 import { GetChazaByIdUseCase } from './application/use-cases/get_chaza_by_id.use-case';
+// import { UpdateChazaDto } from './interface/dtos/update-chaza.dto';
+import { UpdateChazaUseCase } from './application/use-cases/update-chaza.use-case';
 
 
 @Module({
@@ -17,7 +19,8 @@ import { GetChazaByIdUseCase } from './application/use-cases/get_chaza_by_id.use
       useClass: TypeOrmChazaRepository,
     },
     CreateChazaUseCase,
-    GetChazaByIdUseCase
+    GetChazaByIdUseCase,
+    UpdateChazaUseCase
   ],
   controllers: [ChazaController],
   exports: ['IChazaRepository']

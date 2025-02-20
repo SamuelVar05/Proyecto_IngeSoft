@@ -13,6 +13,7 @@ import { AuthGuard } from 'src/auth/infrastructure/guards/Jwt-auth.guard';
 import { findChazaByIdChazaResponseDto } from './find-chaza-by-id-response.dto';
 import { UpdateChazaUseCase } from 'src/chaza/application/use-cases/update-chaza.use-case';
 import { UpdateChazaResponseDto } from './update-chaza-response.dto';
+import { UpdateChazaDto } from '../dtos/update-chaza.dto';
 // import { UpdateChazaDto } from ;
 
 @ApiTags('Chazas')
@@ -62,7 +63,7 @@ export class ChazaController {
       body.descripcion || '',
       body.ubicacion || '',
       body.foto_id || 0,
-      body.id_usuario,
+      body.id_usuario.toString(),
     );
 
     return {
@@ -122,11 +123,11 @@ export class ChazaController {
   async getChaza(@Param('idChaza') idChaza: string): Promise<ApiResponse<findChazaByIdChazaResponseDto>> {
     try {
       console.log(idChaza);
-      const a = typeof idChaza;
-      console.log(a);
+      // const a = typeof idChaza;
+      // console.log(a);
       const chaza = await this.getChazaUseCase.execute(idChaza);
       // console.log(chaza);
-      console.log(idChaza);
+      // console.log(idChaza);
       if (!chaza) {
         throw new NotFoundException({
           status: 'error',
@@ -191,7 +192,7 @@ export class ChazaController {
       },
     },
   })
-  async updateChaza(@Param('idChaza') idChaza: string, @Body() body: CreateChazaDto): Promise<ApiResponse<UpdateChazaResponseDto>> {
+  async updateChaza(@Param('idChaza') idChaza: string, @Body() body: UpdateChazaDto): Promise<ApiResponse<UpdateChazaResponseDto>> {
     try {
       // if (!body.nombre && !body.descripcion && !body.horario) {
       //   throw new BadRequestException({
@@ -200,7 +201,7 @@ export class ChazaController {
       //   });
       // }
 
-      const updatedChaza = await this.updateChazaUseCase.execute(idChaza, body);
+      const updatedChaza = await this.updateChazaUseCase.execute(idChaza,body.descripcion,body.nombre,body.ubicacion,body.foto_id,body.id_usuario.toString()); 
 
       if (!updatedChaza) {
         throw new NotFoundException({
@@ -210,14 +211,9 @@ export class ChazaController {
       }
 
       return {
-        chaza: {
-          chazaId: updatedChaza.id,
-          nombre: updatedChaza.nombre,
-          descripcion: updatedChaza.descripcion,
-          ubicacion: updatedChaza.ubicacion,
-          foto_id: updatedChaza.foto_id,
-          id_usuario: updatedChaza.id_usuario.id,
-        },
+        success: true,
+        data: updatedChaza,
+        message: 'Chaza updated successfully',
       };
     } catch (error) {
       throw new InternalServerErrorException({

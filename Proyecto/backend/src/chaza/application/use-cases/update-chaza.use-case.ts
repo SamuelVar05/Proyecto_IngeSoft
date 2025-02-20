@@ -5,6 +5,7 @@ import { ErrorManager } from 'utils/ErrorManager';
 import { ChazaBuilder } from 'src/chaza/domain/builders/chaza.builder';
 import { Chaza } from 'src/chaza/domain/entities/chaza.entity';
 import { CreateChazaDto } from 'src/chaza/interface/dtos/create-chaza.dto';
+import { User } from 'src/user/domain/entities/user.entity';
 
 @Injectable()
 export class UpdateChazaUseCase {
@@ -13,7 +14,12 @@ export class UpdateChazaUseCase {
     private readonly chazaRepository: ChazaRepository,
   ) {}
 
-  async execute(idChaza: string, updateChazaDto: CreateChazaDto): Promise<UpdateChazaResponseDto> {
+  async execute(idChaza: string, 
+    descripcion:string ,
+    nombre:string,
+    ubicacion:string,
+    foto_id:number |undefined,
+    id_usuario:string): Promise<UpdateChazaResponseDto> {
     try {
       // Buscar la chaza por ID
       const chaza = await this.chazaRepository.findChazaById(idChaza);
@@ -24,36 +30,36 @@ export class UpdateChazaUseCase {
         });
       }
 
-      // Validar que los datos no estén vacíos
-      if (!updateChazaDto || Object.keys(updateChazaDto).length === 0) {
-        throw new BadRequestException({
-          status: 'error',
-          message: 'Datos inválidos. Por favor verifica los campos requeridos.',
-        });
-      }
+      // // Validar que los datos no estén vacíos NECESARIO?
+      // if (!updateChazaDto || Object.keys(updateChazaDto).length === 0) {
+      //   throw new BadRequestException({
+      //     status: 'error',
+      //     message: 'Datos inválidos. Por favor verifica los campos requeridos.',
+      //   });
+      // }
 
       // Actualizar la chaza con los nuevos datos
-      const udpatedChaza = new ChazaBuilder()
-        .setNombre(updateChazaDto.nombre)
-        .setDescripcion(updateChazaDto.descripcion)
-        .setUbicacion(updateChazaDto.ubicacion)
-        .setFotoId(updateChazaDto.foto_id)
-        .setUsuario(updateChazaDto.id_usuario)
+      const updatedChaza = new ChazaBuilder()
+        .setNombre(nombre)
+        .setDescripcion(descripcion)
+        .setUbicacion(ubicacion)
+        .setFotoId(foto_id)
+        .setUsuario(id_usuario)
         .build();
 
 
-      await this.chazaRepository.updateChaza(idChaza, udpatedChaza);
+      await this.chazaRepository.updateChaza(idChaza, updatedChaza);
       
       return {
         // status: 'success',
         // message: 'Chaza actualizada exitosamente',
         chaza: {
-          chazaId: udpatedChaza.id,
-          nombre: udpatedChaza.nombre,
-          descripcion: udpatedChaza.descripcion,
-          ubicacion: udpatedChaza.ubicacion,
-          foto_id: udpatedChaza.foto_id,
-          id_usuario: udpatedChaza.id_usuario.id,
+          chazaId: updatedChaza.id,
+          nombre: updatedChaza.nombre,
+          descripcion: updatedChaza.descripcion,
+          ubicacion: updatedChaza.ubicacion,
+          foto_id: updatedChaza.foto_id,
+          id_usuario: updatedChaza.id_usuario,
         },
       };
     } catch (error) {

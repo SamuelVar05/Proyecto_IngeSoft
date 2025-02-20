@@ -39,7 +39,7 @@ export class CreateChazaUseCase {
         .setDescripcion(descripcion)
         .setUbicacion(ubicacion)
         .setFotoId(foto_id)
-        .setUsuario(user)
+        .setUsuario(user.id)
         .build();
 
       await this.chazaRepository.createChaza(newChaza);
@@ -51,7 +51,7 @@ export class CreateChazaUseCase {
           descripcion: newChaza.descripcion,
           ubicacion: newChaza.ubicacion,
           foto_id: newChaza.foto_id,
-          id_usuario: newChaza.id_usuario.id,
+          id_usuario: newChaza.id_usuario,
         },
       };
     } catch (error) {

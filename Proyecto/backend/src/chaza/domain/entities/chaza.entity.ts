@@ -7,7 +7,7 @@ export class Chaza {
   id: string;
 
   @ManyToOne(() => User)
-  id_usuario: User;
+  id_usuario: string;
 
   @Column()
   nombre: string;
@@ -18,6 +18,6 @@ export class Chaza {
   @Column()
   ubicacion: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true }) // Asegura que el tipo sea correcto
   foto_id: number | undefined;
 }
