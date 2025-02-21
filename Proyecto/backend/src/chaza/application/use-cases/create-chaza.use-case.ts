@@ -46,7 +46,6 @@ export class CreateChazaUseCase {
 
       return {
         chaza: {
-          chazaId: newChaza.id,
           nombre: newChaza.nombre,
           descripcion: newChaza.descripcion,
           ubicacion: newChaza.ubicacion,
