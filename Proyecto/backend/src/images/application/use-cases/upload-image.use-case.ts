@@ -4,7 +4,7 @@ import { ImageRepository } from 'src/images/domain/ports/image.repository';
 @Injectable()
 export class UploadImageUseCase {
   constructor(
-    @Inject('IImageRepositcory')
+    @Inject('ImageRepository')
     private readonly imageRepository: ImageRepository,
   ) {}
   async execute(file: Express.Multer.File): Promise<string> {

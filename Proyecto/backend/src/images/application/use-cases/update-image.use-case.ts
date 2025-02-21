@@ -4,7 +4,7 @@ import { ImageRepository } from 'src/images/domain/ports/image.repository';
 @Injectable()
 export class UpdateImageUseCase {
   constructor(
-    @Inject('IImageRepository')
+    @Inject('ImageRepository')
     private readonly imageRepository: ImageRepository,
   ) {}
 

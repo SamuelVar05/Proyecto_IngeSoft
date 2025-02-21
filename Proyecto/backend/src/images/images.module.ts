@@ -9,7 +9,7 @@ import { UpdateImageUseCase } from './application/use-cases/update-image.use-cas
   imports: [],
   providers: [
     {
-      provide: 'IImageRepository',
+      provide: 'ImageRepository',
       useClass: SupabaseImageRepository,
     },
     UploadImageUseCase,
