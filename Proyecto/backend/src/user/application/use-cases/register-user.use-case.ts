@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { RegisterUserResponseDto } from 'src/auth/application/use-cases/dtos/register-user-response.dto';
 import { AuthService } from 'src/auth/domain/ports/auth.service';
 import { UserBuilder } from 'src/user/domain/builders/user.builder';
-import { User } from 'src/user/domain/entities/user.entity';
+// import { User } from 'src/user/domain/entities/user.entity';
 import { UserRepository } from 'src/user/domain/ports/user.repository';
 import { ErrorManager } from 'utils/ErrorManager';
 
@@ -45,7 +45,7 @@ export class RegisterUserUseCase {
       return {
         user: {
           email: newUser.email,
-          userid: newUser.id,
+          userid: newUser.id, 
         },
         token,
       };
