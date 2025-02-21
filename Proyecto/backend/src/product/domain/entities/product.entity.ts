@@ -6,7 +6,7 @@ export class Product {
   @PrimaryGeneratedColumn('increment')
   id: string;
 
-  @Column({ unique: true })
+  @Column()
   name: string;
 
   @Column({
@@ -18,8 +18,6 @@ export class Product {
     nullable: true,
   })
   barcode: string;
-
-  
 
   @ManyToOne(() => Category, (category) => category.products)
   category: Category;

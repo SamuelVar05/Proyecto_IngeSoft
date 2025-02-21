@@ -2,12 +2,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ImageRepository } from 'src/images/domain/ports/image.repository';
 
 @Injectable()
-export class UploadImageUseCase {
+export class UpdateImageUseCase {
   constructor(
-    @Inject('IImageRepositcory')
+    @Inject('IImageRepository')
     private readonly imageRepository: ImageRepository,
   ) {}
-  async execute(file: Express.Multer.File): Promise<string> {
-    return this.imageRepository.uploadImage(file);
+
+  async execute(iamgeId: string, file: Express.Multer.File): Promise<string> {
+    return 'hello world';
   }
 }

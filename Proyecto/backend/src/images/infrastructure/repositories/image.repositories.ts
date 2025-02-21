@@ -7,7 +7,7 @@ import path from 'path';
 @Injectable()
 export class SupabaseImageRepository implements ImageRepository {
   private readonly supabase;
-  private bucketName;
+  private bucketName: string;
 
   constructor() {
     this.supabase = createClient(

@@ -8,4 +8,6 @@ export class CreateProductDto {
   price: number;
   @IsString()
   categoryId: string;
+
+  barcode?: string | null;
 }

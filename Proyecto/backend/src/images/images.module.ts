@@ -3,6 +3,7 @@ import { SupabaseImageRepository } from './infrastructure/repositories/image.rep
 import { UploadImageUseCase } from './application/use-cases/upload-image.use-case';
 import { ImageController } from './interface/controller/image.controller';
 import { FindAllImagesUseCase } from './application/use-cases/findAll-images.use-case';
+import { UpdateImageUseCase } from './application/use-cases/update-image.use-case';
 
 @Module({
   imports: [],
@@ -13,6 +14,7 @@ import { FindAllImagesUseCase } from './application/use-cases/findAll-images.use
     },
     UploadImageUseCase,
     FindAllImagesUseCase,
+    UpdateImageUseCase,
   ],
   controllers: [ImageController],
 })
