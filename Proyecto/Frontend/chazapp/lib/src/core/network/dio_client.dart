@@ -6,7 +6,7 @@ class DioClient {
 
   DioClient({Dio? dio})
       : _dio = dio ?? Dio(BaseOptions(
-          baseUrl: ApiEndpoints.baseUrl,
+          baseUrl: baseUrl,
           connectTimeout: const Duration(seconds: 10),
           receiveTimeout: const Duration(seconds: 10),
         )) {
