@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
+import 'api_endpoints.dart';
 
 class DioClient {
   final Dio _dio;
 
   DioClient({Dio? dio})
       : _dio = dio ?? Dio(BaseOptions(
-          baseUrl: 'https://api.ejemplo.com',
+          baseUrl: ApiEndpoints.baseUrl,
           connectTimeout: const Duration(seconds: 10),
           receiveTimeout: const Duration(seconds: 10),
         )) {
@@ -13,7 +14,8 @@ class DioClient {
   }
 
   // Responses
-  Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> get(String path,
+      {Map<String, dynamic>? queryParameters}) async {
     return await _dio.get(path, queryParameters: queryParameters);
   }
 
