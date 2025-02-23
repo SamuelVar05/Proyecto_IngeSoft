@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
-import 'package:chazapp/src/auth/presentation/screens/login_screen.dart';
-import 'package:chazapp/src/auth/presentation/screens/signup_screen.dart';
-import 'package:chazapp/src/auth/presentation/screens/home_screen.dart';
+import 'package:chazapp/src/features/auth/presentation/screens/login_screen.dart';
+import 'package:chazapp/src/features/auth/presentation/screens/signup_screen.dart';
+import 'package:chazapp/src/features/auth/presentation/screens/home_screen.dart';
 
 final GoRouter router = GoRouter(
   routes: [

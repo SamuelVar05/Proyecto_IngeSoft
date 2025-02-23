@@ -1,12 +1,12 @@
 import 'package:chazapp/src/config/themes/unchaza_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:chazapp/src/auth/presentation/widgets/custom_text_field.dart';
+import 'package:chazapp/src/features/auth/presentation/widgets/custom_text_field.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
 
   final _formKey = GlobalKey<FormBuilderState>();
 
@@ -45,14 +45,24 @@ class LoginScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                "Iniciar Sesión",
+                                "Crea tu cuenta",
                                 style: UNChazaTheme.textTheme.displayMedium,
                               ),
                               const SizedBox(height: 20),
                               CustomTextField(
+                                name: "name",
+                                text: "Nombre",
+                                hint: "Juan Perez",
+                                keyboardType: TextInputType.text,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: "Nombre requerido"),
+                                ]),
+                              ),
+                              CustomTextField(
                                 name: "email",
                                 text: "Correo electrónico",
-                                hint: "ej: juan1234@gmail.com",
+                                hint: "juan1234@gmail.com",
                                 keyboardType: TextInputType.text,
                                 validator: FormBuilderValidators.compose([
                                   FormBuilderValidators.required(
@@ -75,10 +85,26 @@ class LoginScreen extends StatelessWidget {
                                           "La contraseña debe tener al menos 8\ncaracteres, una letra mayúscula,un número\ny un caracter especial."),
                                 ]),
                               ),
+                              CustomTextField(
+                                name: "confirmationpassword",
+                                text: "Confirmar contraseña",
+                                hint: "********",
+                                isPassword: true,
+                                keyboardType: TextInputType.text,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: "Contraseña requerida"),
+                                  /*FormBuilderValidators.equal(
+                                      _formKey.currentState?.fields['password']!
+                                          .value,
+                                      errorText:
+                                          "Las contraseñas no coinciden"),*/
+                                ]),
+                              ),
                               const SizedBox(height: 20),
                               ElevatedButton(
                                 onPressed: () {
-                                  context.go('/home');
+                                  context.goNamed('login');
                                 },
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: UNChazaTheme.black,
@@ -90,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                                       right: 15, left: 15, top: 10, bottom: 10),
                                 ),
                                 child: Text(
-                                  "Ingresar",
+                                  "Registrate",
                                   style: UNChazaTheme.textTheme.headlineSmall,
                                 ),
                               ),
@@ -99,12 +125,12 @@ class LoginScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text("¿No tiene una cuenta?",
+                                  Text("¿Ya tienes una cuenta?",
                                       style: UNChazaTheme.textTheme.labelSmall),
                                   const SizedBox(width: 5),
                                   ElevatedButton(
                                     onPressed: () {
-                                      context.go('/signup');
+                                      context.goNamed('login');
                                     },
                                     style: ElevatedButton.styleFrom(
                                       foregroundColor: UNChazaTheme.black,
@@ -118,7 +144,7 @@ class LoginScreen extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8),
                                     ),
-                                    child: Text("Registrarse",
+                                    child: Text("Iniciar sesión",
                                         style:
                                             UNChazaTheme.textTheme.titleLarge),
                                   ),
