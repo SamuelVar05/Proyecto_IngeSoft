@@ -23,10 +23,10 @@ class LoginSuccess extends LoginState {
 }
 
 class LoginFailure extends LoginState {
-  final DioException errorMessage;
+  final DioException exception;
 
-  const LoginFailure(this.errorMessage);
+  const LoginFailure(this.exception);
 
   @override
-  List<Object> get props => [errorMessage];
+  List<Object> get props => [exception];
 }
