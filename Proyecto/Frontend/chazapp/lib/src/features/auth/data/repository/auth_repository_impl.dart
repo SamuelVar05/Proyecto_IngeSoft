@@ -22,17 +22,47 @@ class AuthRepositoryImpl implements AuthRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
-        return DataFailed(
-          DioException(
-            error: httpResponse.response.statusMessage,
-            response: httpResponse.response,
-            type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions,
-          ),
-        );
+        return DataFailed(DioException(
+          error: "Error ${httpResponse.response.statusCode}",
+          message: "Error en la petición",
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
       }
     } on DioException catch (e) {
+      if (e.response?.statusCode == HttpStatus.unauthorized) {
+        return DataFailed(DioException(
+          error: "Error ${e.response?.statusCode}",
+          message: "Usuario o contraseña incorrectos",
+          response: e.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: e.requestOptions,
+        ));
+      }
+      if (e.response?.statusCode == HttpStatus.badRequest) {
+        return DataFailed(DioException(
+          error: "Error ${e.response?.statusCode}",
+          message: "Error en los campos enviados. Intente nuevamente.",
+          response: e.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: e.requestOptions,
+        ));
+      }
       return DataFailed(e);
+    } on SocketException {
+      return DataFailed(DioException(
+        error: "No hay conexión a Internet.",
+        requestOptions:
+            RequestOptions(path: ''), // Se requiere un `RequestOptions`
+        type: DioExceptionType.connectionError,
+      ));
+    } catch (e) {
+      return DataFailed(DioException(
+        error: "Error inesperado: ${e.toString()}",
+        requestOptions: RequestOptions(path: ''),
+        type: DioExceptionType.unknown,
+      ));
     }
   }
 }
