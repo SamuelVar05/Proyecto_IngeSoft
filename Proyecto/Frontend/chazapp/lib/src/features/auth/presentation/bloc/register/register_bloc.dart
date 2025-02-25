@@ -5,11 +5,11 @@ import 'package:chazapp/src/features/auth/presentation/bloc/register/register_ev
 import 'package:chazapp/src/features/auth/presentation/bloc/register/register_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegisterBloc extends Bloc<RegisterEvent, RegisterState>{
+class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final RegisterUseCase _registerUseCase;
 
   // El estado inicial será RegisterInitial
-  RegisterBloc(this._registerUseCase) : super(RegisterInitial()){
+  RegisterBloc(this._registerUseCase) : super(RegisterInitial()) {
     on<RegisterRequested>(_onRegisterRequested);
   }
 
@@ -17,7 +17,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState>{
   Future<void> _onRegisterRequested(
       RegisterRequested event, Emitter<RegisterState> emit) async {
     final result = await _registerUseCase.call(
-      params: RegisterRequestEntity(email: event.email, password: event.password),
+      params:
+          RegisterRequestEntity(email: event.email, password: event.password),
     );
 
     // Si el resultado es exitoso

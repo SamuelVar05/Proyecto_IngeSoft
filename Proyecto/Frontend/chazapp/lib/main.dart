@@ -1,5 +1,6 @@
 import 'package:chazapp/injection_container.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_bloc.dart';
+import 'package:chazapp/src/features/auth/presentation/bloc/register/register_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'src/config/router/app_router.dart';
@@ -16,7 +17,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => sl<LoginBloc>())],
+      providers: [
+        BlocProvider(create: (_) => sl<LoginBloc>()),
+        BlocProvider(create: (_) => sl<RegisterBloc>()),
+      ],
       child: MaterialApp.router(
         routerConfig: router,
         debugShowCheckedModeBanner: false,

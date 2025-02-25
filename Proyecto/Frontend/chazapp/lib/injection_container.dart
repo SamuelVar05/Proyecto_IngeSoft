@@ -5,6 +5,7 @@ import 'package:chazapp/src/features/auth/domain/repository/auth_repository.dart
 import 'package:chazapp/src/features/auth/domain/usecases/login.dart';
 import 'package:chazapp/src/features/auth/domain/usecases/register.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_bloc.dart';
+import 'package:chazapp/src/features/auth/presentation/bloc/register/register_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -30,5 +31,8 @@ Future<void> initializeDependencies() async {
   // Blocs
   sl.registerFactory<LoginBloc>(
     () => LoginBloc(sl()),
+  );
+  sl.registerFactory<RegisterBloc>(
+    () => RegisterBloc(sl()),
   );
 }
