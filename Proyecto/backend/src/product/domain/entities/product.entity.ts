@@ -1,5 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Category } from './category.entity';
+
+import { Chaza } from 'src/chaza/domain/entities/chaza.entity';
+import { Category } from 'src/category/domain/entites/category.entity';
 
 @Entity()
 export class Product {
@@ -17,9 +19,13 @@ export class Product {
   @Column({
     nullable: true,
   })
-  barcode: string;
+  barcode?: string;
 
-  
+  @Column()
+  description: string;
+
+  @ManyToOne(() => Chaza, (chaza) => chaza.products)
+  chaza: Chaza;
 
   @ManyToOne(() => Category, (category) => category.products)
   category: Category;
