@@ -24,32 +24,37 @@ class _LoginApiService implements LoginApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<UserModel>> login(LoginRequestModel body) async {
+  Future<HttpResponse<ApiResponse<UserModel>>> login(
+      LoginRequestModel body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _options = _setStreamType<HttpResponse<UserModel>>(Options(
+    final _options =
+        _setStreamType<HttpResponse<ApiResponse<UserModel>>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/auth/login',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+            .compose(
+              _dio.options,
+              '/auth/login',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UserModel _value;
+    late ApiResponse<UserModel> _value;
     try {
-      _value = UserModel.fromJson(_result.data!);
+      _value = ApiResponse<UserModel>.fromJson(
+        _result.data!,
+        (json) => UserModel.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

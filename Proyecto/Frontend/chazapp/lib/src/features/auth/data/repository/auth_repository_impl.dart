@@ -28,9 +28,11 @@ class AuthRepositoryImpl implements AuthRepository {
       // Se realiza la petición al servidor
       final httpResponse = await _loginApiService.login(request);
 
+      final loginResponse = httpResponse.data;
+
       // Si la petición fue exitosa
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
+        return DataSuccess(loginResponse.data!);
       } else {
         return DataFailed(DioException(
           error: "Error ${httpResponse.response.statusCode}",
@@ -92,9 +94,11 @@ class AuthRepositoryImpl implements AuthRepository {
       // Se realiza la petición al servidor
       final httpResponse = await _registerApiService.register(request);
 
+      final registerResponse = httpResponse.data;
+
       // Si la petición fue exitosa
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
+        return DataSuccess(registerResponse.data!);
       } else {
         return DataFailed(
           DioException(
@@ -121,7 +125,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return DataFailed(e);
     } on SocketException {
-
       // Si no hay conexión a Internet
       return DataFailed(DioException(
         error: "No hay conexión a Internet.",
@@ -130,7 +133,6 @@ class AuthRepositoryImpl implements AuthRepository {
         type: DioExceptionType.connectionError,
       ));
     } catch (e) {
-
       // Si ocurre un error inesperado
       return DataFailed(DioException(
         error: "Error inesperado: ${e.toString()}",
