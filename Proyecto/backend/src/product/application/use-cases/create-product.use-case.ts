@@ -12,13 +12,18 @@ export class CreateProductUseCase {
   ) {}
   async execute(product: CreateProductDto) {
     try {
-      const { categoryId, name, price } = product;
+      const { categoryId, chazaId, description, name, price, barcode } =
+        product;
 
       const newProduct = new ProductBuilder()
-        .setCategory(categoryId)
         .setName(name)
+        .setDescription(description)
+        .setCategory(categoryId)
+        .setChazaId(chazaId)
         .setPrice(price)
         .build();
+
+      barcode != null ? (newProduct.barcode = barcode) : null;
 
       await this.productRepository.createProduct(newProduct);
       return newProduct;
