@@ -32,7 +32,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
       // Si la petición fue exitosa
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(loginResponse.data!);
+        UserModel user = loginResponse.data!;
+
+        return DataSuccess(user);
       } else {
         return DataFailed(DioException(
           error: "Error ${httpResponse.response.statusCode}",
