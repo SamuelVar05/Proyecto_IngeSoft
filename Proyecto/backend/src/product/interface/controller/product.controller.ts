@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  UseGuards,
+  Delete,
+  Patch,
+} from '@nestjs/common';
 import { CreateProductUseCase } from 'src/product/application/use-cases/create-product.use-case';
 import { CreateProductDto } from '../dtos/create-product.dto';
 
@@ -9,4 +17,16 @@ export class ProductController {
   createProduct(@Body() product: CreateProductDto) {
     return this.createProductUseCase.execute(product);
   }
+
+  @Get('list')
+  getProducts() {}
+
+  @Get('/:id')
+  getProductById() {}
+
+  @Delete('/:id')
+  deleteProduct() {}
+
+  @Patch('update')
+  updateProduct() {}
 }
