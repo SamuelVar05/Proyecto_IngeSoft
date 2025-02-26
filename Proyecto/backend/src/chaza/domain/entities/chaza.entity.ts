@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { User } from 'src/user/domain/entities/user.entity';
+import { Product } from 'src/product/domain/entities/product.entity';
 
 @Entity()
 export class Chaza {
@@ -20,4 +27,7 @@ export class Chaza {
 
   @Column({ type: 'int', nullable: true }) // Asegura que el tipo sea correcto
   foto_id: number | undefined;
+
+  @OneToMany(() => Product, (Product) => Product.chaza)
+  products: Product[];
 }
