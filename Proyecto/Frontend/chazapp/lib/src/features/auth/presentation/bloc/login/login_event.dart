@@ -16,3 +16,8 @@ class LoginRequested extends LoginEvent {
   @override
   List<Object?> get props => [email, password];
 }
+
+class CheckAuthStatus extends LoginEvent {}
+
+class LogoutRequested extends LoginEvent {}
+
