@@ -14,7 +14,7 @@ class LoginInitial extends LoginState {}
 class LoginLoading extends LoginState {}
 
 class LoginSuccess extends LoginState {
-  final UserEntity userEntity;
+  final LoginEntity userEntity;
 
   const LoginSuccess(this.userEntity);
 

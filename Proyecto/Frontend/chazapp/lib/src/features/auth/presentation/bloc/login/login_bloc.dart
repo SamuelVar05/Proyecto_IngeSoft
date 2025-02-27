@@ -51,7 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final result = await _getTokenUseCase.call();
 
     if (result != null) {
-      emit(LoginSuccess(UserEntity(token: result)));
+      emit(LoginSuccess(LoginEntity(token: result)));
     } else {
       emit(LoginInitial());
     }

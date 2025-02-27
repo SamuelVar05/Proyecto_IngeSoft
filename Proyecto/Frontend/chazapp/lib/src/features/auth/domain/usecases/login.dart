@@ -5,13 +5,13 @@ import 'package:chazapp/src/features/auth/domain/entities/user_entity.dart';
 import 'package:chazapp/src/features/auth/domain/repository/auth_repository.dart';
 
 class LoginUseCase
-    implements UseCase<DataState<UserEntity>, LoginRequestEntity> {
+    implements UseCase<DataState<LoginEntity>, LoginRequestEntity> {
   final AuthRepository _authRepository;
 
   LoginUseCase(this._authRepository);
 
   @override
-  Future<DataState<UserEntity>> call({LoginRequestEntity? params}) {
+  Future<DataState<LoginEntity>> call({LoginRequestEntity? params}) {
     if (params == null) {
       throw ArgumentError("Params cannot be null");
     }
