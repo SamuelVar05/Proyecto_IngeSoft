@@ -4,6 +4,7 @@ import 'package:chazapp/src/features/auth/data/data_sources/remote/register_api_
 import 'package:chazapp/src/features/auth/data/repository/auth_local_repository_impl.dart';
 import 'package:chazapp/src/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:chazapp/src/features/auth/domain/repository/auth_repository.dart';
+import 'package:chazapp/src/features/auth/domain/repository/auth_local_repository.dart';
 import 'package:chazapp/src/features/auth/domain/usecases/delete_token.dart';
 import 'package:chazapp/src/features/auth/domain/usecases/get_token.dart';
 import 'package:chazapp/src/features/auth/domain/usecases/login.dart';
@@ -30,7 +31,7 @@ Future<void> initializeDependencies() async {
     AuthRepositoryImpl(sl(), sl()),
   );
 
-  sl.registerSingleton<AuthLocalRepositoryImpl>(AuthLocalRepositoryImpl(sl()));
+  sl.registerSingleton<AuthLocalRepository>(AuthLocalRepositoryImpl(sl()));
 
   // UseCases
   sl.registerSingleton<LoginUseCase>(LoginUseCase(sl()));
