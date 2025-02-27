@@ -1,4 +1,4 @@
-import 'package:chazapp/src/features/auth/domain/entities/user_entity.dart';
+import 'package:chazapp/src/features/auth/domain/entities/login_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 

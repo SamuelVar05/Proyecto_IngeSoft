@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:chazapp/src/core/network/data_state.dart';
 import 'package:chazapp/src/features/auth/domain/entities/login_request_entity.dart';
-import 'package:chazapp/src/features/auth/domain/entities/user_entity.dart';
+import 'package:chazapp/src/features/auth/domain/entities/login_entity.dart';
 import 'package:chazapp/src/features/auth/domain/usecases/delete_token.dart';
 import 'package:chazapp/src/features/auth/domain/usecases/get_token.dart';
 import 'package:chazapp/src/features/auth/domain/usecases/login.dart';
