@@ -44,10 +44,11 @@ jobs:
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.DO_HOST }}
+          port: 22
           username: root
           key: ${{secrets.DO_SSH_PRIVATE_KEY}}
           script: |
-            cd Proyecto_IngeSoft/Proyecto/backend
+            cd ~/Proyecto_IngeSoft/Proyecto/backend
             git pull origin main-backend
             npm install 
             npm run build
