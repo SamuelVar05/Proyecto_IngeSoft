@@ -38,14 +38,14 @@ jobs:
           echo "DO_SSH_PRIVATE_KEY length: ${#DO_SSH_PRIVATE_KEY}" | sed 's/./*/g'
         env:
           DO_HOST: ${{ secrets.DO_HOST }}
-          DO_PASSWORD: ${{ secrets.DO_PASSWORD }}
           DO_SSH_PRIVATE_KEY: ${{ secrets.DO_SSH_PRIVATE_KEY }}
 
       - name: Deploy to DigitalOcean Droplet via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
-          key: ${{secrets.DO_SSH_PRIVATE_KEY}}
           host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{secrets.DO_SSH_PRIVATE_KEY}}
           script: |
             cd Proyecto_IngeSoft/Proyecto/backend
             git pull origin main-backend
