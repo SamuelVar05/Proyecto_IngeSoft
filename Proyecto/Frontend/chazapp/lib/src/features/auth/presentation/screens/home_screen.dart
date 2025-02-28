@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,8 +10,18 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home Screen'),
       ),
-      body: const Center(
-        child: Text('Welcome to the Home Screen!'),
+      body: Center(
+        child: Column(
+          children: [
+            const Text('Home Screen'),
+            ElevatedButton(
+              onPressed: () {
+                context.go("/profile");
+              },
+              child: const Text("Perfil"),
+            )
+          ],
+        ),
       ),
     );
   }
