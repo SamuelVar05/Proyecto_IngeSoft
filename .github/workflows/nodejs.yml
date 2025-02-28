@@ -44,7 +44,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.DO_HOST }}
-          username: ${{ secrets.DO_USERNAME }}
+          username: root
           key: ${{secrets.DO_SSH_PRIVATE_KEY}}
           script: |
             cd Proyecto_IngeSoft/Proyecto/backend
