@@ -12,6 +12,7 @@ import 'package:chazapp/src/features/auth/domain/usecases/register.dart';
 import 'package:chazapp/src/features/auth/domain/usecases/save_token.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_bloc.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/register/register_bloc.dart';
+import 'package:chazapp/src/features/profile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -46,5 +47,9 @@ Future<void> initializeDependencies() async {
   );
   sl.registerFactory<RegisterBloc>(
     () => RegisterBloc(sl()),
+  );
+
+  sl.registerFactory<ProfileBloc>(
+    () => ProfileBloc(),
   );
 }
