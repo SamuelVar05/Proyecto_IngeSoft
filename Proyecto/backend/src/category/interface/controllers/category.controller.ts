@@ -19,6 +19,7 @@ import {
   ApiResponse as SwaggerResponse,
   ApiTags,
   ApiParam,
+  ApiExcludeEndpoint,
 } from '@nestjs/swagger';
 
 @ApiTags('Categories')
@@ -139,6 +140,7 @@ export class CategoryController {
   }
 
   @Patch('update')
+  @ApiExcludeEndpoint()
   @ApiOperation({ summary: 'Update a category' })
   @SwaggerResponse({
     status: 200,

@@ -16,6 +16,7 @@ import {
   ApiResponse as SwaggerResponse,
   ApiTags,
   ApiParam,
+  ApiExcludeEndpoint,
 } from '@nestjs/swagger';
 import { ApiResponse } from 'types/ApiResponse';
 import { getProductsUseCase } from 'src/product/application/use-cases/getProduct.use-case';
@@ -110,6 +111,7 @@ export class ProductController {
   }
 
   @Get('/:id')
+  @ApiExcludeEndpoint()
   @ApiOperation({ summary: 'Get product by ID' })
   @SwaggerResponse({
     status: 200,
@@ -140,6 +142,7 @@ export class ProductController {
   getProductById(@Param('id') id: string) {}
 
   @Delete('/:id')
+  @ApiExcludeEndpoint()
   @ApiOperation({ summary: 'Delete product by ID' })
   @SwaggerResponse({
     status: 200,
@@ -165,6 +168,7 @@ export class ProductController {
   deleteProduct(@Param('id') id: string) {}
 
   @Patch('update')
+  @ApiExcludeEndpoint()
   @ApiOperation({ summary: 'Update product information' })
   @SwaggerResponse({
     status: 200,
