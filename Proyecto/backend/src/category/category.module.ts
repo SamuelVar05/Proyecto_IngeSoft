@@ -6,9 +6,11 @@ import { TypeOrmCategoryRepository } from './infrastructure/repositories/categor
 import { CategoryController } from './interface/controllers/category.controller';
 import { getAllCategoriesUseCase } from './application/use-cases/getCategory.use-case';
 import { deleteCategoryUseCase } from './application/use-cases/deleteCategory.use-case';
+import { AuthModule } from 'src/auth/auth.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Category])],
+  imports: [TypeOrmModule.forFeature([Category]), AuthModule, UserModule],
   providers: [
     {
       provide: 'ICategoryRepository',

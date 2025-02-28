@@ -10,9 +10,15 @@ import { ProductController } from './interface/controller/product.controller';
 import { Category } from 'src/category/domain/entites/category.entity';
 import { getProductsUseCase } from './application/use-cases/getProduct.use-case';
 import { GetProductByUserUseCase } from './application/use-cases/getProductByUse.use-case';
+import { AuthModule } from 'src/auth/auth.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, Category, Chaza])],
+  imports: [
+    TypeOrmModule.forFeature([Product, Category, Chaza]),
+    AuthModule,
+    UserModule,
+  ],
   providers: [
     {
       provide: 'IProductRepository',

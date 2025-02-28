@@ -25,9 +25,11 @@ import { GetAllProductsDto } from 'src/product/application/dtos/getAllProducts.d
 import { GetProductByUserUseCase } from 'src/product/application/use-cases/getProductByUse.use-case';
 import { GetProductByUserDto } from 'src/product/application/dtos/getProducyByUser.dto';
 import { GetProductByUserParamDto } from '../dtos/get-product-by-user.dto';
+import { AuthGuard } from 'src/auth/infrastructure/guards/Jwt-auth.guard';
 
 @ApiTags('Products')
 @Controller('product')
+@UseGuards(AuthGuard)
 export class ProductController {
   constructor(
     private readonly createProductUseCase: CreateProductUseCase,

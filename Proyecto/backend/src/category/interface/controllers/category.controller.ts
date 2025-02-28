@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateCategoryUseCaseDto } from 'src/category/application/dtos/createCategory.use-case.dto';
 import { CreateCategoryUseCase } from 'src/category/application/use-cases/createCategory.use-case';
@@ -21,9 +22,11 @@ import {
   ApiParam,
   ApiExcludeEndpoint,
 } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/infrastructure/guards/Jwt-auth.guard';
 
 @ApiTags('Categories')
 @Controller('category')
+@UseGuards(AuthGuard)
 export class CategoryController {
   constructor(
     private readonly createCategoryUseCase: CreateCategoryUseCase,
