@@ -38,7 +38,7 @@ export class ProductController {
   ) {}
 
   @Post('create')
-  @ApiOperation({ summary: 'Create a new product' })
+  @ApiOperation({ summary: 'Create a new product in the database ' })
   @SwaggerResponse({
     status: 201,
     description: 'Product successfully created',
