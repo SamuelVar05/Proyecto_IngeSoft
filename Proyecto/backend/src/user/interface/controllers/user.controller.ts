@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Req } from '@nestjs/common';
 import { RegisterUserUseCase } from 'src/user/application/use-cases/register-user.use-case';
 import { RegisterUserDto } from '../dtos/register-user.dto';
 import { ApiResponse } from 'types/ApiResponse';
@@ -9,11 +9,17 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/infrastructure/guards/Jwt-auth.guard';
+import { FindUserByIdUseCase } from 'src/user/application/use-cases/findUserById.use-case';
+import { Request } from 'express';
+import { FindUserDto } from 'src/user/application/dtos/findUser.dto';
 
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
-  constructor(private readonly registerUserUseCase: RegisterUserUseCase) {}
+  constructor(
+    private readonly registerUserUseCase: RegisterUserUseCase,
+    private readonly findUserByIdUseCase: FindUserByIdUseCase,
+  ) {}
 
   @UseGuards(AuthGuard)
   @Get('testoperation')
@@ -74,6 +80,33 @@ export class UserController {
       success: true,
       data: responseUseCase,
       message: 'User registered successfully',
+    };
+  }
+
+  @Get('info')
+  @ApiOperation({ summary: 'Get user info' })
+  @SwaggerResponse({
+    status: 200,
+    description: 'User info retrieved successfully',
+    schema: {
+      example: {
+        success: true,
+        data: {
+          email: 'example.email.com',
+          role: 'User',
+        },
+        message: 'User info retrieved successfully',
+      },
+    },
+  })
+  @UseGuards(AuthGuard)
+  async getUserInfo(@Req() req: Request): Promise<ApiResponse<FindUserDto>> {
+    const userId = req.idUser;
+    const user = await this.findUserByIdUseCase.execute(userId);
+    return {
+      message: 'User info retrieved successfully',
+      data: user,
+      success: true,
     };
   }
 }

@@ -5,6 +5,7 @@ import { TypeOrmUserRepository } from './infrastructure/repositories/user.reposi
 import { RegisterUserUseCase } from './application/use-cases/register-user.use-case';
 import { UserController } from './interface/controllers/user.controller';
 import { AuthModule } from '../auth/auth.module';
+import { FindUserByIdUseCase } from './application/use-cases/findUserById.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule)],
@@ -14,6 +15,7 @@ import { AuthModule } from '../auth/auth.module';
       useClass: TypeOrmUserRepository,
     },
     RegisterUserUseCase,
+    FindUserByIdUseCase
   ],
   controllers: [UserController],
   exports: ['IUserRepository'],
