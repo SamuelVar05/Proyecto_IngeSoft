@@ -31,15 +31,6 @@ jobs:
         run: npm run build
         working-directory: Proyecto/backend
 
-      - name: Debug Secrets
-        run: |
-          echo "DO_HOST is set"
-          echo "DO_PASSWORD length: ${#DO_PASSWORD}" | sed 's/./*/g'
-          echo "DO_SSH_PRIVATE_KEY length: ${#DO_SSH_PRIVATE_KEY}" | sed 's/./*/g'
-        env:
-          DO_HOST: ${{ secrets.DO_HOST }}
-          DO_SSH_PRIVATE_KEY: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-
       - name: Deploy to DigitalOcean Droplet via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
