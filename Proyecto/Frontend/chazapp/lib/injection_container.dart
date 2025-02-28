@@ -12,6 +12,9 @@ import 'package:chazapp/src/features/auth/domain/usecases/register.dart';
 import 'package:chazapp/src/features/auth/domain/usecases/save_token.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_bloc.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/register/register_bloc.dart';
+import 'package:chazapp/src/features/profile/data/data_sources/remote/profile_api_service.dart';
+import 'package:chazapp/src/features/profile/data/repository/profile_repository_impl.dart';
+import 'package:chazapp/src/features/profile/domain/repository/profile_repository.dart';
 import 'package:chazapp/src/features/profile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -26,6 +29,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<LoginApiService>(LoginApiService(sl()));
   sl.registerSingleton<RegisterApiService>(RegisterApiService(sl()));
   sl.registerSingleton<AuthLocalStorageService>(AuthLocalStorageService());
+  sl.registerSingleton<ProfileApiService>(ProfileApiService(sl()));
 
   // Repositories
   sl.registerSingleton<AuthRepository>(
@@ -33,6 +37,8 @@ Future<void> initializeDependencies() async {
   );
 
   sl.registerSingleton<AuthLocalRepository>(AuthLocalRepositoryImpl(sl()));
+
+  sl.registerSingleton<ProfileRepository>(ProfileRepositoryImpl(sl()));
 
   // UseCases
   sl.registerSingleton<LoginUseCase>(LoginUseCase(sl()));
