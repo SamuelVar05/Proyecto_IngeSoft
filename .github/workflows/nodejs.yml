@@ -50,6 +50,9 @@ jobs:
           script: |
             cd ~/Proyecto_IngeSoft/Proyecto/backend
             git pull origin main-backend
-            /root/.nvm/versions/node/v22.14.0/bin/npm install 
-            /root/.nvm/versions/node/v22.14.0/bin/npm run build
-            /root/.nvm/versions/node/v22.14.0/bin/pm2 restart main
+            export NVM_DIR="/root/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use 22.14.0
+            npm install 
+            npm run build
+            pm2 restart main
