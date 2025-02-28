@@ -5,7 +5,7 @@ import { Category } from 'src/category/domain/entites/category.entity';
 
 @Entity()
 export class Product {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ unique: true })
