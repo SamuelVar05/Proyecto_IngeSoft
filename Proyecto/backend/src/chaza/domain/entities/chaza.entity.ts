@@ -13,7 +13,7 @@ export class Chaza {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, (user) => user.chazas)
   id_usuario: string;
 
   @Column()

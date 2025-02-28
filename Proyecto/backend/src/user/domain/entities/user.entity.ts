@@ -1,8 +1,10 @@
+import { Chaza } from 'src/chaza/domain/entities/chaza.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 enum Role {
@@ -31,4 +33,7 @@ export class User {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => Chaza, (chaza) => chaza.id_usuario)
+  chazas: Chaza[];
 }

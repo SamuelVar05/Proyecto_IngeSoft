@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ProductBuilder } from 'src/product/domain/builders/product.builder';
 import { Product } from 'src/product/domain/entities/product.entity';
 import { ProductRepository } from 'src/product/domain/port/product.repository';
@@ -6,6 +6,7 @@ import { CreateProductDto } from 'src/product/interface/dtos/create-product.dto'
 import { ErrorManager } from 'utils/ErrorManager';
 import { CreateProductUseCaseDto } from '../dtos/createProduct.dto';
 
+@Injectable()
 export class CreateProductUseCase {
   constructor(
     @Inject('IProductRepository')
@@ -15,6 +16,16 @@ export class CreateProductUseCase {
     try {
       const { categoryId, chazaId, description, name, price, barcode } =
         product;
+
+      const productExists =
+        await this.productRepository.findProductByName(name);
+
+      if (productExists) {
+        throw new ErrorManager({
+          message: 'Product already exists',
+          type: 'CONFLICT',
+        });
+      }
 
       const newProduct = new ProductBuilder()
         .setName(name)

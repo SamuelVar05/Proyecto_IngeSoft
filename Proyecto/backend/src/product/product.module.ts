@@ -8,6 +8,8 @@ import { CreateProductUseCase } from './application/use-cases/create-product.use
 import { Chaza } from 'src/chaza/domain/entities/chaza.entity';
 import { ProductController } from './interface/controller/product.controller';
 import { Category } from 'src/category/domain/entites/category.entity';
+import { getProductsUseCase } from './application/use-cases/getProduct.use-case';
+import { GetProductByUserUseCase } from './application/use-cases/getProductByUse.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Product, Category, Chaza])],
@@ -17,6 +19,8 @@ import { Category } from 'src/category/domain/entites/category.entity';
       useClass: TypeOrmProductRepository,
     },
     CreateProductUseCase,
+    getProductsUseCase,
+    GetProductByUserUseCase,
   ],
   controllers: [ProductController],
 })

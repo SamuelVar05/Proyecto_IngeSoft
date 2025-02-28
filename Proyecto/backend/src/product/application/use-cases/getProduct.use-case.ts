@@ -1,8 +1,9 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ProductRepository } from 'src/product/domain/port/product.repository';
 import { ErrorManager } from 'utils/ErrorManager';
 import { GetAllProductsDto } from '../dtos/getAllProducts.dto';
 
+@Injectable()
 export class getProductsUseCase {
   constructor(
     @Inject('IProductRepository')

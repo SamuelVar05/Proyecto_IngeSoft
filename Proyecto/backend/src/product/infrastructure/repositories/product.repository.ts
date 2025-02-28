@@ -37,7 +37,23 @@ export class TypeOrmProductRepository implements ProductRepository {
   }
   getProducts(): Promise<Product[]> {
     return this.productRepository.find({
-      relations: ['category','chaza'],
+      relations: ['category', 'chaza'],
     });
+  }
+  findProductByName(name: string): Promise<Product | null> {
+    return this.productRepository.findOne({
+      where: {
+        name,
+      },
+    });
+  }
+
+  async findProductsByUserId(userId: string): Promise<Product[]> {
+    return await this.productRepository
+      .createQueryBuilder('product')
+      .innerJoin('product.chaza', 'chaza')
+      .innerJoin('chaza.id_usuario', 'user')
+      .where('user.id = :userId', { userId })
+      .getMany();
   }
 }
