@@ -50,6 +50,6 @@ jobs:
           script: |
             cd ~/Proyecto_IngeSoft/Proyecto/backend
             git pull origin main-backend
-            npm install 
-            npm run build
-            pm2 restart main
+            /root/.nvm/versions/node/v22.14.0/bin/npm install 
+            /root/.nvm/versions/node/v22.14.0/bin/npm run build
+            /root/.nvm/versions/node/v22.14.0/bin/pm2 restart main
