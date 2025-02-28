@@ -10,6 +10,9 @@ vendor/
 .env
 .env.local
 .env.*
+
+# Carpeta de pruebas
+test.md
 # Carpetas de construcción y logs
 dist/
 build/
