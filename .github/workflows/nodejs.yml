@@ -3,6 +3,12 @@ name: 🚀 NestJS Backend Deployment Pipeline
 on:
   push:
     branches: ['main-backend']
+  pull_request:
+    branches: ['main-backend']
+
+concurrency:
+  group: ci-${{github.ref}}
+  cancel-in-progress: true
 
 jobs:
   testing:
