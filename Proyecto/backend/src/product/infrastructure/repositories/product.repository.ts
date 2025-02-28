@@ -35,4 +35,9 @@ export class TypeOrmProductRepository implements ProductRepository {
       where: { category: { id: categoryId } },
     });
   }
+  getProducts(): Promise<Product[]> {
+    return this.productRepository.find({
+      relations: ['category','chaza'],
+    });
+  }
 }

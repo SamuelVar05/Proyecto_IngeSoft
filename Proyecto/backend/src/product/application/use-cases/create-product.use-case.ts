@@ -4,13 +4,14 @@ import { Product } from 'src/product/domain/entities/product.entity';
 import { ProductRepository } from 'src/product/domain/port/product.repository';
 import { CreateProductDto } from 'src/product/interface/dtos/create-product.dto';
 import { ErrorManager } from 'utils/ErrorManager';
+import { CreateProductUseCaseDto } from '../dtos/createProduct.dto';
 
 export class CreateProductUseCase {
   constructor(
     @Inject('IProductRepository')
     private readonly productRepository: ProductRepository,
   ) {}
-  async execute(product: CreateProductDto) {
+  async execute(product: CreateProductDto): Promise<CreateProductUseCaseDto> {
     try {
       const { categoryId, chazaId, description, name, price, barcode } =
         product;
@@ -26,7 +27,15 @@ export class CreateProductUseCase {
       barcode != null ? (newProduct.barcode = barcode) : null;
 
       await this.productRepository.createProduct(newProduct);
-      return newProduct;
+
+      return {
+        name: newProduct.name,
+        price: newProduct.price,
+        description: newProduct.description,
+        barcode: newProduct.barcode,
+        categoryId: categoryId,
+        chazaId: chazaId,
+      };
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }

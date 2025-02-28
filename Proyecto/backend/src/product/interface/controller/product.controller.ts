@@ -16,11 +16,17 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ApiResponse } from 'types/ApiResponse';
+import { getProductsUseCase } from 'src/product/application/use-cases/getProduct.use-case';
+import { CreateProductUseCaseDto } from 'src/product/application/dtos/createProduct.dto';
+import { GetAllProductsDto } from 'src/product/application/dtos/getAllProducts.dto';
 
 @ApiTags('Products')
 @Controller('product')
 export class ProductController {
-  constructor(private readonly createProductUseCase: CreateProductUseCase) {}
+  constructor(
+    private readonly createProductUseCase: CreateProductUseCase,
+    private readonly getProductsUseCase: getProductsUseCase,
+  ) {}
 
   @Post('create')
   @ApiOperation({ summary: 'Create a new product' })
@@ -51,11 +57,18 @@ export class ProductController {
       },
     },
   })
-  createProduct(@Body() product: CreateProductDto) {
-    return this.createProductUseCase.execute(product);
+  async createProduct(
+    @Body() product: CreateProductDto,
+  ): Promise<ApiResponse<CreateProductUseCaseDto>> {
+    const productResponse = await this.createProductUseCase.execute(product);
+    return {
+      data: productResponse,
+      message: 'Product created successfully',
+      success: true,
+    };
   }
 
-  @Get('list')
+  @Get('')
   @ApiOperation({ summary: 'Get all products' })
   @SwaggerResponse({
     status: 200,
@@ -81,7 +94,14 @@ export class ProductController {
       },
     },
   })
-  getProducts() {}
+  async getProducts(): Promise<ApiResponse<GetAllProductsDto[]>> {
+    const products = await this.getProductsUseCase.execute();
+    return {
+      success: true,
+      data: products,
+      message: 'Products retrieved successfully',
+    };
+  }
 
   @Get('/:id')
   @ApiOperation({ summary: 'Get product by ID' })
