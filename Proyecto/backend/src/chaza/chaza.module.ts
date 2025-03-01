@@ -10,6 +10,8 @@ import { GetChazaByIdUseCase } from './application/use-cases/get_chaza_by_id.use
 
 import { UpdateChazaUseCase } from './application/use-cases/update-chaza.use-case';
 import { DeleteChazaUseCase } from './application/use-cases/delete-chaza.use-case';
+import { get } from 'http';
+import { GetChazasByUserUseCase } from './application/use-cases/getChazastByUser.use-case';
 
 
 @Module({
@@ -22,7 +24,8 @@ import { DeleteChazaUseCase } from './application/use-cases/delete-chaza.use-cas
     CreateChazaUseCase,
     GetChazaByIdUseCase,
     UpdateChazaUseCase, 
-    DeleteChazaUseCase
+    DeleteChazaUseCase,
+    GetChazasByUserUseCase
   ],
   controllers: [ChazaController],
   exports: ['IChazaRepository']
