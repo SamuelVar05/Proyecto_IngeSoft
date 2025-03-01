@@ -15,6 +15,7 @@ import 'package:chazapp/src/features/auth/presentation/bloc/register/register_bl
 import 'package:chazapp/src/features/profile/data/data_sources/remote/profile_api_service.dart';
 import 'package:chazapp/src/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:chazapp/src/features/profile/domain/repository/profile_repository.dart';
+import 'package:chazapp/src/features/profile/domain/usecases/get_profile.dart';
 import 'package:chazapp/src/features/profile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -46,6 +47,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetTokenUseCase>(GetTokenUseCase(sl()));
   sl.registerSingleton<DeleteTokenUseCase>(DeleteTokenUseCase(sl()));
   sl.registerSingleton<SaveTokenUseCase>(SaveTokenUseCase(sl()));
+  sl.registerSingleton<GetProfileUseCase>(GetProfileUseCase(sl()));
 
   // Blocs
   sl.registerFactory<LoginBloc>(
