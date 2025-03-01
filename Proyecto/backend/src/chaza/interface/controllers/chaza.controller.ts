@@ -23,7 +23,7 @@ import {DeleteChazaResponseDto} from './delete-chaza-response.dto';
 export class ChazaController {
   constructor(private readonly createChazaUseCase: CreateChazaUseCase, private readonly getChazaUseCase:GetChazaByIdUseCase,private readonly updateChazaUseCase: UpdateChazaUseCase, readonly deleteChazaUseCase: DeleteChazaUseCase ) {}
 
-  @Post('/')
+  @Post('/create')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Create a new chaza' })
   @SwaggerResponse({
@@ -79,7 +79,7 @@ export class ChazaController {
   // ----------------------------------------
 
 
-  @Get('/:idChaza')
+  @Get('/get/:idChaza')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Get chaza details' })
   @SwaggerResponse({
@@ -135,7 +135,7 @@ export class ChazaController {
   }
 
   // -------------------------------------
-  @Put('/:idChaza')
+  @Put('/update/:idChaza')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Update an existing chaza' })
   @SwaggerResponse({
@@ -193,7 +193,7 @@ export class ChazaController {
   }
 
   // -----------------------------------
-  @Delete('/:idChaza')
+  @Delete('/delete/:idChaza')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Delete an existing chaza' })
 

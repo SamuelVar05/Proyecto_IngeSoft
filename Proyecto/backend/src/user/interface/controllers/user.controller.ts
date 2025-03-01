@@ -94,18 +94,21 @@ export class UserController {
         data: {
           email: 'example.email.com',
           role: 'User',
+          userid: 'bb1452f2-8ffa-4624-90d0-0bab55f80352',
         },
         message: 'User info retrieved successfully',
       },
     },
   })
   @UseGuards(AuthGuard)
-  async getUserInfo(@Req() req: Request): Promise<ApiResponse<FindUserDto>> {
+  async getUserInfo(
+    @Req() req: Request,
+  ): Promise<ApiResponse<FindUserDto & { idUser: string }>> {
     const userId = req.idUser;
     const user = await this.findUserByIdUseCase.execute(userId);
     return {
       message: 'User info retrieved successfully',
-      data: user,
+      data: { ...user, idUser: userId },
       success: true,
     };
   }
