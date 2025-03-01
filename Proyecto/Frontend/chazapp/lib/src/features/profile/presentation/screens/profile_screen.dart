@@ -23,6 +23,7 @@ class ProfileScreen extends StatelessWidget {
         child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
             if (state is! LoginSuccess) {
+              context.go("/");
               return const Center(
                 child: CircularProgressIndicator(),
               );
