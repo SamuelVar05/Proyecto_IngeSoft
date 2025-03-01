@@ -5,4 +5,5 @@ export interface ChazaRepository {
   findChazaById(id: string): Promise<Chaza | null>;
   updateChaza(id:string ,updateData: Chaza): Promise<Chaza|void>;
   deleteChaza(id: string): Promise<void>;
+  findChazasByUserId(userId: string): Promise<Chaza[]>;
 }
