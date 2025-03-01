@@ -7,4 +7,8 @@ abstract class ProfileEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class ProfileRequested extends ProfileEvent {}
+class ProfileRequested extends ProfileEvent {
+  final String token;
+
+  const ProfileRequested(this.token);
+}
