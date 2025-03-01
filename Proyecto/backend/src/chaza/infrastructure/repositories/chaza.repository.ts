@@ -38,4 +38,14 @@ export class TypeOrmChazaRepository implements ChazaRepository {
 
   async deleteChaza(id: string): Promise<void> {
     await this.chazaRepository.delete(id);}
+
+
+    async findChazasByUserId(userId: string): Promise<Chaza[]> {
+      return await this.chazaRepository
+        .createQueryBuilder('chaza')
+        .innerJoin('chaza.id_usuario', 'user')
+        .where('user.id = :userId', { userId })
+        .leftJoinAndSelect('chaza.products', 'product') // Opcional: cargar productos
+        .getMany();
+    }
 }
