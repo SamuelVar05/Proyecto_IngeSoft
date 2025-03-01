@@ -24,7 +24,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/profile',
       name: 'profile',
-      builder: (context, state) => const ProfileScreen(),
+      // builder: (context, state) => const ProfileScreen(),
+      // TODO: Change to the logic with data from the login
+      builder: (context, state) =>
+          const ProfileSuccessScreen(email: "samuevarga@gmail.com"),
     ),
   ],
 );
