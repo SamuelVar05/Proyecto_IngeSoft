@@ -58,6 +58,6 @@ Future<void> initializeDependencies() async {
   );
 
   sl.registerFactory<ProfileBloc>(
-    () => ProfileBloc(),
+    () => ProfileBloc(sl()),
   );
 }
