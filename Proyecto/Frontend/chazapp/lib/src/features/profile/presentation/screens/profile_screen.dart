@@ -40,6 +40,7 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         const Text('Profile Screen'),
                         Text('Email: ${state.profileEntity.email}'),
+                        Text('UserID: ${state.profileEntity.idUser}'),
                         ElevatedButton(
                           onPressed: () {},
                           child: const Text("Crear Chaza"),
@@ -84,7 +85,7 @@ class ProfileSuccessScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {},
               child: const Text("Crear Chaza"),
-            ), 
+            ),
             ElevatedButton(
               onPressed: () {},
               child: const Text("Cerrar Sesión"),

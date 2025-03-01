@@ -5,7 +5,7 @@ part 'profile_model.g.dart';
 
 @JsonSerializable()
 class ProfileModel extends ProfileEntity {
-  const ProfileModel({required super.email});
+  const ProfileModel({required super.email, required super.idUser});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>
       _$ProfileModelFromJson(json);
