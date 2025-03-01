@@ -87,9 +87,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         );
       }
     } on DioException catch (e) {
-      print("Hola");
       if (e.response?.statusCode == HttpStatus.notFound) {
-        print("hola. Estoy en la excepción");
         return const DataSuccess(
             []); // Si no hay chazas, se retorna una lista vacía (no es un error
       }
