@@ -1,3 +1,4 @@
+import 'package:chazapp/src/features/profile/domain/enitites/chaza_entity.dart';
 import 'package:chazapp/src/features/profile/domain/enitites/profile_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -15,8 +16,9 @@ class ProfileLoading extends ProfileState {}
 
 class ProfileSuccess extends ProfileState {
   final ProfileEntity profileEntity;
+  final List<ChazaEntity> chazas;
 
-  const ProfileSuccess(this.profileEntity);
+  const ProfileSuccess(this.profileEntity, this.chazas);
 
   @override
   List<Object> get props => [profileEntity];
