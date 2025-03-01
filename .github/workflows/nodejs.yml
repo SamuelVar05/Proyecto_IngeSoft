@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +31,13 @@ jobs:
         run: npm run build
         working-directory: Proyecto/backend
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    # Solo ejecutar el job de deploy cuando es un push a main-backend, no en pull requests
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main-backend'
+
+    steps:
       - name: Deploy to DigitalOcean Droplet via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
