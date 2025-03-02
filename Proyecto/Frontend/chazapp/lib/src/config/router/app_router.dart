@@ -1,4 +1,6 @@
 import 'package:chazapp/src/features/favorites/presentation/favorites_screen.dart';
+import 'package:chazapp/src/features/home/presentation/screens/chaza_detail_screen.dart';
+import 'package:chazapp/src/features/home/presentation/screens/product_detail_screen.dart';
 import 'package:chazapp/src/features/profile/presentation/screens/profile_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:chazapp/src/features/auth/presentation/screens/login_screen.dart';
@@ -34,6 +36,35 @@ final GoRouter router = GoRouter(
       // TODO: Change to the logic with data from the login
       // builder: (context, state) =>
       //     const ProfileSuccessScreen(email: "samuevarga@gmail.com"),
+    ),
+    //TODO: Cambiar estructura para acepatr un objeto Producto
+    GoRoute(
+      path: '/product-detail',
+      builder: (context, state) {
+        final productData = state.extra as Map<String, dynamic>;
+        return ProductDetailScreen(
+          imageUrl: productData['imageUrl'],
+          productName: productData['productName'],
+          chazaName: productData['chazaName'],
+          category: productData['category'],
+          price: productData['price'],
+          description: productData['description'],
+        );
+      },
+    ),
+    GoRoute(
+      path: '/chaza-detail',
+      builder: (context, state) {
+        final chazaData = state.extra as Map<String, dynamic>;
+        return ChazaDetailScreen(
+          imageUrl: chazaData['imageUrl'],
+          chazaName: chazaData['chazaName'],
+          schedule: chazaData['schedule'],
+          location: chazaData['location'],
+          payment: chazaData['payment'],
+          description: chazaData['description'],
+        );
+      },
     ),
   ],
 );

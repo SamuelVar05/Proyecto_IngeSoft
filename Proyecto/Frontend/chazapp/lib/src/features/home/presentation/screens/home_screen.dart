@@ -24,11 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return {
       'imageUrl':
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8gPuvWQDT1siypHfSPCGlJj1Ba_HwjmM_aw&s',
-      'title': 'Hamburguesa Clásica',
+      'productName': 'Hamburguesa Clásica',
       'chazaName': 'Hamburguesitas',
       'category': 'Comida rápida',
       'price': 25000,
       'isFavorite': false,
+      'description':
+          'Jugosa carne de res a la parrilla, pan suave y dorado, lechuga fresca, tomate, cebolla, queso derretido y nuestra deliciosa salsa especial. ¡Sencilla, pero llena de sabor!'
     };
   });
 
@@ -40,8 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
       'payment': 'Nequi,Daviplata',
       'imageUrl':
           'https://i.pinimg.com/236x/15/ee/bf/15eebf77c19a47dd2c413f8b844bd8e9.jpg',
-      'chazaName': 'Cafe UNAL',
+      'chazaName': 'Cafesito UNAL',
       'location': 'CyT',
+      'description':
+          'En nuestra chaza Cafesito para todos encontrarás bebidas calientes y snacks con un toque casero y sabores irresistibles. Es el lugar perfecto para disfrutar de una comida deliciosa y rápida, como si la preparara tu barista de confianza. ¡Siempre con el mejor sabor y a la orden!',
       'onFavoritePressed': () {},
     };
   });
@@ -77,13 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: UNChazaTheme.white,
       appBar: const CustomAppBar(
-        showFavorites: true,
+        type: AppBarType.home,
         imageUrl:
             'https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt',
       ),
       body: CustomScrollView(
         slivers: [
-          Text(token),
           SliverAppBar(
             pinned: false, // No se queda fijo
             floating: true,
@@ -112,11 +115,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   final product = products[index];
                   return ProductCard(
                     imageUrl: product['imageUrl'],
-                    title: product['title'],
+                    productName: product['productName'],
                     chazaName: product['chazaName'],
                     category: product['category'],
                     price: product['price'],
                     isFavorite: product['isFavorite'],
+                    description: product['description'],
                     onFavoritePressed: () => toggleFavorite(index, true),
                   );
                 } else {
@@ -128,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     imageUrl: chaza['imageUrl'],
                     chazaName: chaza['chazaName'],
                     location: chaza['location'],
+                    description: chaza['description'],
                     onFavoritePressed: () => toggleFavorite(index, false),
                   );
                 }

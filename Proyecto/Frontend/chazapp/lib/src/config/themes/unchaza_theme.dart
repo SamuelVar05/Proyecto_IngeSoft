@@ -33,9 +33,9 @@ class UNChazaTheme {
 
   /// Text Theme
   static TextTheme textTheme = TextTheme(
-    displayLarge: GoogleFonts.gloock(
+    displayLarge: GoogleFonts.merriweather(
       fontSize: 25,
-      fontWeight: FontWeight.normal,
+      fontWeight: FontWeight.w900,
       color: black,
     ),
     displayMedium: GoogleFonts.bricolageGrotesque(
@@ -68,6 +68,11 @@ class UNChazaTheme {
       fontWeight: FontWeight.bold,
       color: black,
     ),
+    // bodyLarge: GoogleFonts.bricolageGrotesque(
+    //   fontSize: 16,
+    //   fontWeight: FontWeight.normal,
+    //   color: black,
+    // ),
     bodyMedium: GoogleFonts.bricolageGrotesque(
       fontSize: 9,
       fontWeight: FontWeight.normal,
