@@ -1,5 +1,8 @@
 import 'package:chazapp/src/config/themes/unchaza_theme.dart';
+import 'package:chazapp/src/features/auth/presentation/bloc/login/login_bloc.dart';
+import 'package:chazapp/src/features/auth/presentation/bloc/login/login_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 enum AppBarType { home, back, profile }
@@ -82,7 +85,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         return [
           IconButton(
             icon: const Icon(Icons.exit_to_app, color: Colors.white),
-            onPressed: onExitPressed ?? () {},
+            onPressed: () {
+              context.go("/");
+              context.read<LoginBloc>().add(LogoutRequested());
+            },
           ),
         ];
     }

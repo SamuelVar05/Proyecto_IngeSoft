@@ -1,3 +1,4 @@
+import 'package:chazapp/src/features/chaza_creation/presentation/screens/create_chaza_screen.dart';
 import 'package:chazapp/src/features/favorites/presentation/favorites_screen.dart';
 import 'package:chazapp/src/features/home/presentation/screens/chaza_detail_screen.dart';
 import 'package:chazapp/src/features/home/presentation/screens/product_detail_screen.dart';
@@ -28,6 +29,11 @@ final GoRouter router = GoRouter(
       path: '/favorites',
       name: 'favorites',
       builder: (context, state) => const FavoritesScreen(),
+    ),
+    GoRoute(
+      path: '/createchaza',
+      name: 'createchaza',
+      builder: (context, state) => CreateChazaScreen(),
     ),
     GoRoute(
       path: '/profile',

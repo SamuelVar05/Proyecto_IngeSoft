@@ -74,7 +74,7 @@ class UNChazaTheme {
     //   color: black,
     // ),
     bodyMedium: GoogleFonts.bricolageGrotesque(
-      fontSize: 9,
+      fontSize: 24,
       fontWeight: FontWeight.normal,
       color: black,
     ),

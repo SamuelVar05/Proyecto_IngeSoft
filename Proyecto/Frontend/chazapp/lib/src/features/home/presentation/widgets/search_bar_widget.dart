@@ -1,5 +1,5 @@
 import 'package:chazapp/src/config/themes/unchaza_theme.dart';
-import 'package:chazapp/src/features/home/presentation/widgets/secondary_button.dart';
+import 'package:chazapp/src/features/home/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
@@ -52,8 +52,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Align(
-              alignment:
-                  Alignment.centerLeft, // Asegura que no ocupe todo el ancho
+              alignment: Alignment.centerLeft,
               child: Container(
                 decoration: BoxDecoration(
                   color: UNChazaTheme.white.withValues(alpha: 0.3),
@@ -88,27 +87,23 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Expanded(
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: UNChazaTheme.white,
-                  hintText: isSearchingProducts
-                      ? "Buscar productos"
-                      : "Buscar chazas",
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  suffixIcon: IconButton(
-                    icon:
-                        const Icon(Icons.search, color: UNChazaTheme.darkGrey),
-                    onPressed: () {
-                      widget.onSearch(_searchController.text);
-                    },
-                  ),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: UNChazaTheme.white,
+                hintText:
+                    isSearchingProducts ? "Buscar productos" : "Buscar chazas",
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.search, color: UNChazaTheme.darkGrey),
+                  onPressed: () {
+                    widget.onSearch(_searchController.text);
+                  },
                 ),
               ),
             ),
@@ -121,7 +116,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               mainAxisAlignment: MainAxisAlignment.start, // Alineación ajustada
               children: [
                 if (isSearchingProducts)
-                  SecondaryButton(
+                  CustomButton(
                     text: "Escanear",
                     buttonColor: UNChazaTheme.white.withValues(alpha: 0.3),
                     textColor: UNChazaTheme.white,
@@ -129,7 +124,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                     onPressed: widget.onScan,
                   ),
                 if (isSearchingProducts) const SizedBox(width: 10),
-                SecondaryButton(
+                CustomButton(
                   text: "Filtrar",
                   buttonColor: UNChazaTheme.white.withValues(alpha: 0.3),
                   textColor: UNChazaTheme.white,
