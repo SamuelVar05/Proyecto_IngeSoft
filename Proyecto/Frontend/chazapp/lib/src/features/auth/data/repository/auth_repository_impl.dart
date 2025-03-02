@@ -6,7 +6,7 @@ import 'package:chazapp/src/features/auth/data/data_sources/remote/register_api_
 import 'package:chazapp/src/features/auth/data/models/login_request_model.dart';
 import 'package:chazapp/src/features/auth/data/models/register_model.dart';
 import 'package:chazapp/src/features/auth/data/models/register_request_model.dart';
-import 'package:chazapp/src/features/auth/data/models/user_model.dart';
+import 'package:chazapp/src/features/auth/data/models/login_model.dart';
 import 'package:chazapp/src/features/auth/domain/repository/auth_repository.dart';
 import 'package:dio/dio.dart';
 
@@ -19,7 +19,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._loginApiService, this._registerApiService);
 
   @override
-  Future<DataState<UserModel>> login(String email, String password) async {
+  Future<DataState<LoginModel>> login(String email, String password) async {
     try {
       // Se crea un objeto de tipo LoginRequestModel con los datos enviados
       LoginRequestModel request =
@@ -32,7 +32,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       // Si la petición fue exitosa
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        UserModel user = loginResponse.data!;
+        LoginModel user = loginResponse.data!;
 
         return DataSuccess(user);
       } else {
@@ -99,7 +99,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final registerResponse = httpResponse.data;
 
       // Si la petición fue exitosa
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == HttpStatus.created) {
         return DataSuccess(registerResponse.data!);
       } else {
         return DataFailed(
