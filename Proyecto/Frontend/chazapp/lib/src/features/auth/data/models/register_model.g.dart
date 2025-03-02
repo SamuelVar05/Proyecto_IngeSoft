@@ -8,12 +8,12 @@ part of 'register_model.dart';
 
 RegisterModel _$RegisterModelFromJson(Map<String, dynamic> json) =>
     RegisterModel(
-      email: json['email'] as String,
-      userID: json['userID'] as String,
+      UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      json['token'] as String,
     );
 
 Map<String, dynamic> _$RegisterModelToJson(RegisterModel instance) =>
     <String, dynamic>{
-      'email': instance.email,
-      'userID': instance.userID,
+      'user': instance.user,
+      'token': instance.token,
     };

@@ -26,7 +26,7 @@ class SignUpScreen extends StatelessWidget {
           child: BlocListener<RegisterBloc, RegisterState>(
             listener: (context, state) {
               if (state is RegisterSuccess) {
-                context.go('/login');
+                context.go('/');
               }
             },
             child: LayoutBuilder(

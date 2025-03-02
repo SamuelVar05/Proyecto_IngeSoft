@@ -24,7 +24,7 @@ class _LoginApiService implements LoginApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<ApiResponse<UserModel>>> login(
+  Future<HttpResponse<ApiResponse<LoginModel>>> login(
       LoginRequestModel body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -32,7 +32,7 @@ class _LoginApiService implements LoginApiService {
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _options =
-        _setStreamType<HttpResponse<ApiResponse<UserModel>>>(Options(
+        _setStreamType<HttpResponse<ApiResponse<LoginModel>>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -49,11 +49,11 @@ class _LoginApiService implements LoginApiService {
               baseUrl,
             )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<UserModel> _value;
+    late ApiResponse<LoginModel> _value;
     try {
-      _value = ApiResponse<UserModel>.fromJson(
+      _value = ApiResponse<LoginModel>.fromJson(
         _result.data!,
-        (json) => UserModel.fromJson(json as Map<String, dynamic>),
+        (json) => LoginModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
