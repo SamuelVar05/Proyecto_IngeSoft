@@ -1,4 +1,5 @@
 import 'package:chazapp/src/features/chaza_creation/presentation/screens/create_chaza_screen.dart';
+import 'package:chazapp/src/features/chaza_creation/presentation/screens/edit_chaza_screen.dart';
 import 'package:chazapp/src/features/favorites/presentation/favorites_screen.dart';
 import 'package:chazapp/src/features/home/presentation/screens/chaza_detail_screen.dart';
 import 'package:chazapp/src/features/home/presentation/screens/product_detail_screen.dart';
@@ -36,6 +37,22 @@ final GoRouter router = GoRouter(
       builder: (context, state) => CreateChazaScreen(),
     ),
     GoRoute(
+      path: '/edit-chaza',
+      builder: (context, state) {
+        final Map<String, dynamic> chazaData =
+            state.extra as Map<String, dynamic>;
+        return EditChazaScreen(
+          name: chazaData["name"],
+          description: chazaData["description"],
+          location: chazaData["location"],
+          schedule: chazaData["schedule"],
+          imageUrl: chazaData["imageUrl"],
+          payments: List<String>.from(chazaData["payments"]),
+        );
+      },
+    ),
+
+    GoRoute(
       path: '/profile',
       name: 'profile',
       builder: (context, state) => const ProfileScreen(),
@@ -63,6 +80,7 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final chazaData = state.extra as Map<String, dynamic>;
         return ChazaDetailScreen(
+          isOwner: chazaData['isOwner'],
           imageUrl: chazaData['imageUrl'],
           chazaName: chazaData['chazaName'],
           schedule: chazaData['schedule'],

@@ -10,6 +10,7 @@ class ChazaCard extends StatelessWidget {
   final String payment;
   final String description;
   late bool isFavorite;
+  final bool isOwner;
   final VoidCallback onFavoritePressed;
 
   ChazaCard({
@@ -22,6 +23,7 @@ class ChazaCard extends StatelessWidget {
     required this.location,
     required this.payment,
     required this.description,
+    required this.isOwner,
   });
 
   @override
@@ -35,6 +37,7 @@ class ChazaCard extends StatelessWidget {
           'location': location,
           'payment': payment,
           'description': description,
+          'isOwner': isOwner,
         });
       },
       child: Container(

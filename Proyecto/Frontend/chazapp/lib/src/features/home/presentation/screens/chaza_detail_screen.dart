@@ -1,7 +1,9 @@
 import 'package:chazapp/src/features/home/presentation/widgets/custom_app_bar.dart';
+import 'package:chazapp/src/features/home/presentation/widgets/custom_button.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:chazapp/src/config/themes/unchaza_theme.dart';
+import 'package:go_router/go_router.dart';
 
 class ChazaDetailScreen extends StatelessWidget {
   final String imageUrl;
@@ -10,8 +12,9 @@ class ChazaDetailScreen extends StatelessWidget {
   final String location;
   final String payment;
   final String description;
+  final bool isOwner;
 
-  ChazaDetailScreen({
+  const ChazaDetailScreen({
     super.key,
     required this.imageUrl,
     required this.chazaName,
@@ -19,6 +22,7 @@ class ChazaDetailScreen extends StatelessWidget {
     required this.location,
     required this.payment,
     required this.description,
+    required this.isOwner,
   });
 
   // Simulación de productos de la chaza
@@ -130,6 +134,76 @@ class ChazaDetailScreen extends StatelessWidget {
                       style: UNChazaTheme.textTheme.bodyLarge,
                       textAlign: TextAlign.justify),
                   const SizedBox(height: 10),
+                  isOwner
+                      ? Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CustomButton(
+                                  text: "Editar",
+                                  buttonColor: UNChazaTheme.blue,
+                                  textColor: UNChazaTheme.white,
+                                  icon: Icons.edit,
+                                  onPressed: () =>
+                                      context.go('/edit-chaza', extra: {
+                                    "name": chazaName,
+                                    "description": description,
+                                    "location": location,
+                                    "schedule": schedule,
+                                    "imageUrl": imageUrl,
+                                    "payments": payment.split(", "),
+                                  }),
+                                ),
+                                const SizedBox(width: 5),
+                                CustomButton(
+                                  text: "Eliminar",
+                                  buttonColor: UNChazaTheme.red,
+                                  textColor: UNChazaTheme.white,
+                                  onPressed: () => showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      backgroundColor: UNChazaTheme.white,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20.0)),
+                                        side: BorderSide(
+                                            color: UNChazaTheme.orange,
+                                            width: 2.0),
+                                      ),
+                                      title: const Text('Eliminar chaza'),
+                                      titleTextStyle:
+                                          UNChazaTheme.textTheme.displayMedium,
+                                      content: const Text(
+                                          '¿Estás seguro de que deseas eliminar esta chaza?'),
+                                      actionsAlignment:
+                                          MainAxisAlignment.center,
+                                      actions: [
+                                        CustomButton(
+                                          text: "Cancelar",
+                                          buttonColor: UNChazaTheme.deepGrey,
+                                          textColor: UNChazaTheme.white,
+                                          onPressed: () => context.pop(),
+                                        ),
+                                        CustomButton(
+                                          text: "Eliminar",
+                                          buttonColor: UNChazaTheme.red,
+                                          textColor: UNChazaTheme.white,
+                                          onPressed: () {
+                                            context.pop();
+                                            context.pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        )
+                      : Container(),
                   Text("Productos",
                       style: UNChazaTheme.textTheme.displayMedium,
                       textAlign: TextAlign.start),

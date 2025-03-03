@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Map<String, dynamic>> chazas = List.generate(10, (index) {
     return {
       'isFavorite': false,
+      'isOwner': true,
       'schedule': 'L-V 9:00am-5:00pm',
       'payment': 'Nequi,Daviplata',
       'imageUrl':
@@ -127,6 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   final chaza = chazas[index];
                   return ChazaCard(
                     isFavorite: chaza['isFavorite'],
+                    isOwner: chaza['isOwner'],
                     schedule: chaza['schedule'],
                     payment: chaza['payment'],
                     imageUrl: chaza['imageUrl'],
