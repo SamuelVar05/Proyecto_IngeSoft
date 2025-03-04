@@ -8,18 +8,18 @@ part of 'chaza_request_model.dart';
 
 ChazaRequestModel _$ChazaRequestModelFromJson(Map<String, dynamic> json) =>
     ChazaRequestModel(
-      idUsuario: json['idUsuario'] as String,
+      id_usuario: json['id_usuario'] as String,
       nombre: json['nombre'] as String,
       descripcion: json['descripcion'] as String,
       ubicacion: json['ubicacion'] as String?,
-      idPhoto: (json['idPhoto'] as num?)?.toInt(),
+      foto_id: (json['foto_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ChazaRequestModelToJson(ChazaRequestModel instance) =>
     <String, dynamic>{
-      'idUsuario': instance.idUsuario,
+      'id_usuario': instance.id_usuario,
       'nombre': instance.nombre,
       'descripcion': instance.descripcion,
       'ubicacion': instance.ubicacion,
-      'idPhoto': instance.idPhoto,
+      'foto_id': instance.foto_id,
     };
