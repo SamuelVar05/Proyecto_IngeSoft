@@ -25,10 +25,13 @@ class _ChazaCreationService implements ChazaCreationService {
 
   @override
   Future<HttpResponse<ApiResponse<dynamic>>> createChaza(
-      ChazaRequestModel body) async {
+    String token,
+    ChazaRequestModel body,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _options = _setStreamType<HttpResponse<ApiResponse<dynamic>>>(Options(
