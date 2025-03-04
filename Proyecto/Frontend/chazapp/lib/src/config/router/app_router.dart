@@ -2,7 +2,9 @@ import 'package:chazapp/src/features/chaza_creation/presentation/screens/create_
 import 'package:chazapp/src/features/chaza_creation/presentation/screens/edit_chaza_screen.dart';
 import 'package:chazapp/src/features/favorites/presentation/favorites_screen.dart';
 import 'package:chazapp/src/features/home/presentation/screens/chaza_detail_screen.dart';
+import 'package:chazapp/src/features/home/presentation/screens/chaza_detail_screen_2.dart';
 import 'package:chazapp/src/features/home/presentation/screens/product_detail_screen.dart';
+import 'package:chazapp/src/features/profile/domain/enitites/chaza_entity.dart';
 import 'package:chazapp/src/features/profile/presentation/screens/profile_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:chazapp/src/features/auth/presentation/screens/login_screen.dart';
@@ -90,5 +92,22 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+    GoRoute(
+        path: "/chaza-detail2",
+        builder: (context, state) {
+          final chazaData = state.extra as Map<String, dynamic>;
+          final ChazaEntity chaza = chazaData['chaza'];
+          final bool isOwner = chazaData['isOwner'];
+          final String schedule = chazaData['schedule'];
+          final String payment = chazaData['payment'];
+          final String imageUrl = chazaData['imageUrl'];
+          return ChazaDetailScreen2(
+            isOwner: isOwner,
+            imageUrl: imageUrl,
+            chaza: chaza,
+            schedule: schedule,
+            payment: payment,
+          );
+        }),
   ],
 );
