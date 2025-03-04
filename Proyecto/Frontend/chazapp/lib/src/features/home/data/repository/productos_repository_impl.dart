@@ -12,9 +12,10 @@ class ProductosRepositoryImpl implements ProductosRepository {
   ProductosRepositoryImpl(this._productosApiService);
 
   @override
-  Future<DataState<List<ProductoEntity>>> getProductos() async {
+  Future<DataState<List<ProductoEntity>>> getProductos(String token) async {
     try {
-      final httpResponse = await _productosApiService.getProductos();
+      final httpResponse =
+          await _productosApiService.getProductos("Bearer $token");
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         List<ProductoEntity> productos =
