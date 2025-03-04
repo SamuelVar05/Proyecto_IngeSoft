@@ -4,6 +4,7 @@ import 'package:chazapp/src/features/auth/presentation/bloc/login/login_event.da
 import 'package:chazapp/src/features/auth/presentation/bloc/register/register_bloc.dart';
 import 'package:chazapp/src/features/chaza_creation/presentation/bloc/chaza_creation/chaza_creation_bloc.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_bloc.dart';
+import 'package:chazapp/src/features/product_creation/presentation/bloc/category/category_bloc.dart';
 import 'package:chazapp/src/features/product_creation/presentation/bloc/products/products_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => sl<ProductosBloc>()),
         BlocProvider(create: (_) => sl<ChazaCreationBloc>()),
         BlocProvider(create: (_) => sl<ProductsBloc>()),
+        BlocProvider(create: (_) => sl<CategoryBloc>())
       ],
       child: MaterialApp.router(
         routerConfig: router,
