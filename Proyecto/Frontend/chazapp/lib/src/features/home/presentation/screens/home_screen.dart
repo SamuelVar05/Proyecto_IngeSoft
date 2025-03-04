@@ -25,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSearchingProducts =
       true; // Estado global para cambiar entre productos y chazas
 
-  final TextEditingController _searchController = TextEditingController();
   List<ProductEntity> _productsToShow = [];
 
   // Lista de productos simulada
