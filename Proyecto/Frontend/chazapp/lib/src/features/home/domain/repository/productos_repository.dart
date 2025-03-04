@@ -1,6 +1,6 @@
 import 'package:chazapp/src/core/network/data_state.dart';
-import 'package:chazapp/src/features/home/domain/entity/producto_entity.dart';
+import 'package:chazapp/src/features/product_creation/domain/entities/product_entity.dart';
 
 abstract class ProductosRepository {
-  Future<DataState<List<ProductoEntity>>> getProductos(String token);
+  Future<DataState<List<ProductEntity>>> getProductos(String token);
 }

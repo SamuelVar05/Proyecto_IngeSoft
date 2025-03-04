@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:chazapp/src/core/network/data_state.dart';
 import 'package:chazapp/src/features/home/data/data_sources/remote/productos_api_service.dart';
-import 'package:chazapp/src/features/home/domain/entity/producto_entity.dart';
 import 'package:chazapp/src/features/home/domain/repository/productos_repository.dart';
+import 'package:chazapp/src/features/product_creation/domain/entities/product_entity.dart';
 import 'package:dio/dio.dart';
 
 class ProductosRepositoryImpl implements ProductosRepository {
@@ -12,14 +12,14 @@ class ProductosRepositoryImpl implements ProductosRepository {
   ProductosRepositoryImpl(this._productosApiService);
 
   @override
-  Future<DataState<List<ProductoEntity>>> getProductos(String token) async {
+  Future<DataState<List<ProductEntity>>> getProductos(String token) async {
     try {
       final httpResponse =
           await _productosApiService.getProductos("Bearer $token");
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        List<ProductoEntity> productos =
-            httpResponse.data.data!.map((e) => e as ProductoEntity).toList();
+        List<ProductEntity> productos =
+            httpResponse.data.data!.map((e) => e as ProductEntity).toList();
         return DataSuccess(productos);
       } else {
         return const DataSuccess([]);

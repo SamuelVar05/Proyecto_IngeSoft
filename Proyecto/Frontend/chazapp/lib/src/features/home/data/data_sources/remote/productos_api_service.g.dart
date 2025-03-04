@@ -24,7 +24,7 @@ class _ProductosApiService implements ProductosApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<ApiResponse<List<ProductoModel>>>> getProductos(
+  Future<HttpResponse<ApiResponse<List<ProductModel>>>> getProductos(
       String token) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -32,7 +32,7 @@ class _ProductosApiService implements ProductosApiService {
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options =
-        _setStreamType<HttpResponse<ApiResponse<List<ProductoModel>>>>(Options(
+        _setStreamType<HttpResponse<ApiResponse<List<ProductModel>>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -49,14 +49,14 @@ class _ProductosApiService implements ProductosApiService {
               baseUrl,
             )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<List<ProductoModel>> _value;
+    late ApiResponse<List<ProductModel>> _value;
     try {
-      _value = ApiResponse<List<ProductoModel>>.fromJson(
+      _value = ApiResponse<List<ProductModel>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
-                .map<ProductoModel>(
-                    (i) => ProductoModel.fromJson(i as Map<String, dynamic>))
+                .map<ProductModel>(
+                    (i) => ProductModel.fromJson(i as Map<String, dynamic>))
                 .toList()
             : List.empty(),
       );
