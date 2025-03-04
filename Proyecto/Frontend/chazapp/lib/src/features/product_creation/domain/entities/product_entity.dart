@@ -1,3 +1,4 @@
+import 'package:chazapp/src/features/product_creation/data/models/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductEntity extends Equatable {
@@ -20,4 +21,14 @@ class ProductEntity extends Equatable {
   @override
   List<Object?> get props =>
       [name, price, barcode, description, chazaId, categoryId];
+
+  ProductModel toModel(){
+    return ProductModel(
+      name: name,
+      price: price,
+      description: description,
+      chazaId: chazaId,
+      categoryId: categoryId,
+    );
+  }
 }

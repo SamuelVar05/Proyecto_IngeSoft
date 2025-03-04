@@ -17,7 +17,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
       String token, ProductEntity product) async {
     try {
       final httpResponse = await _productsApiService.createProduct(
-          "Bearer $token", product as ProductModel);
+          "Bearer $token", product.toModel());
       if (httpResponse.response.statusCode == HttpStatus.created) {
         ProductModel product = httpResponse.data.data!;
         return DataSuccess(product);

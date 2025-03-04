@@ -1,4 +1,4 @@
-import 'package:chazapp/src/features/home/domain/entity/producto_entity.dart';
+import 'package:chazapp/src/features/product_creation/domain/entities/product_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -12,7 +12,7 @@ class ProductosInitial extends ProductosState {}
 class ProductosLoading extends ProductosState {}
 
 class ProductosLoaded extends ProductosState {
-  final List<ProductoEntity> productos;
+  final List<ProductEntity> productos;
 
   ProductosLoaded({required this.productos});
 
