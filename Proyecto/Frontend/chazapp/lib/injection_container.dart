@@ -22,6 +22,11 @@ import 'package:chazapp/src/features/home/data/repository/productos_repository_i
 import 'package:chazapp/src/features/home/domain/repository/productos_repository.dart';
 import 'package:chazapp/src/features/home/domain/usecases/get_productos.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_bloc.dart';
+import 'package:chazapp/src/features/product_creation/data/data_sources/remote/products_api_service.dart';
+import 'package:chazapp/src/features/product_creation/data/repository/products_repository_impl.dart';
+import 'package:chazapp/src/features/product_creation/domain/repository/products_repository.dart';
+import 'package:chazapp/src/features/product_creation/domain/usecases/create_product.dart';
+import 'package:chazapp/src/features/product_creation/presentation/bloc/products/products_bloc.dart';
 import 'package:chazapp/src/features/profile/data/data_sources/remote/profile_api_service.dart';
 import 'package:chazapp/src/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:chazapp/src/features/profile/domain/repository/profile_repository.dart';
@@ -44,6 +49,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<ProfileApiService>(ProfileApiService(sl()));
   sl.registerSingleton<ProductosApiService>(ProductosApiService(sl()));
   sl.registerSingleton<ChazaCreationService>(ChazaCreationService(sl()));
+  sl.registerSingleton<ProductsApiService>(ProductsApiService(sl()));
 
   // Repositories
   sl.registerSingleton<AuthRepository>(
@@ -58,6 +64,8 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<ChazaRepository>(ChazaRepositoryImpl(sl()));
 
+  sl.registerSingleton<ProductsRepository>(ProductsRepositoryImpl(sl()));
+
   // UseCases
   sl.registerSingleton<LoginUseCase>(LoginUseCase(sl()));
   sl.registerSingleton<RegisterUseCase>(RegisterUseCase(sl()));
@@ -68,6 +76,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetChazasUseCase>(GetChazasUseCase(sl()));
   sl.registerSingleton<GetProductosUseCase>(GetProductosUseCase(sl()));
   sl.registerSingleton<CreateChazaUseCase>(CreateChazaUseCase(sl()));
+  sl.registerSingleton<CreateProductUseCase>(
+    CreateProductUseCase(sl()),
+  );
 
   // Blocs
   sl.registerFactory<LoginBloc>(
@@ -84,4 +95,8 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<ProductosBloc>(() => ProductosBloc(sl()));
 
   sl.registerFactory<ChazaCreationBloc>(() => ChazaCreationBloc(sl(), sl()));
+
+  sl.registerFactory<ProductsBloc>(
+    () => ProductsBloc(sl()),
+  );
 }
