@@ -27,8 +27,15 @@ class ProfileScreen extends StatelessWidget {
         },
         child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
-            if (state is! LoginSuccess) {
+            if (state is LoginFailure) {
               context.go("/");
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            if (state is! LoginSuccess) {
+              context.read<LoginBloc>().add(CheckAuthStatus());
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -126,8 +133,8 @@ class ProfileScreen extends StatelessWidget {
                                         height: 200,
                                         child: ListView.builder(
                                           shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
+                                          // physics:
+                                          //     const NeverScrollableScrollPhysics(),
                                           itemCount: state.chazas.length,
                                           itemBuilder: (context, index) {
                                             final chaza = state.chazas[index];
