@@ -72,5 +72,5 @@ Future<void> initializeDependencies() async {
     () => ProfileBloc(sl(), sl()),
   );
 
-  sl.registerFactory<ProductosBloc>(sl());
+  sl.registerFactory<ProductosBloc>(() => ProductosBloc(sl()));
 }
