@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:chazapp/src/config/themes/unchaza_theme.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_bloc.dart';
+import 'package:chazapp/src/features/auth/presentation/bloc/login/login_event.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_state.dart';
 import 'package:chazapp/src/features/chaza_creation/presentation/bloc/chaza_creation/chaza_creation_bloc.dart';
 import 'package:chazapp/src/features/chaza_creation/presentation/bloc/chaza_creation/chaza_creation_event.dart';
@@ -46,12 +47,21 @@ class _CreateChazaScreenState extends State<CreateChazaScreen> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
+      final loginBloc = context.read<LoginBloc>();
+      if (loginBloc.state is! LoginSuccess) {
+        loginBloc.add(CheckAuthStatus());
+        return;
+      }
+      if (loginBloc.state is LoginFailure) {
+        context.go("/login");
+        return;
+      }
       final token = context.read<LoginBloc>().state is LoginSuccess
           ? (context.read<LoginBloc>().state as LoginSuccess).userEntity.token
           : null;
 
       if (token == null) {
-        context.go("/");
+        context.read<LoginBloc>().add(CheckAuthStatus());
         return;
       }
 
