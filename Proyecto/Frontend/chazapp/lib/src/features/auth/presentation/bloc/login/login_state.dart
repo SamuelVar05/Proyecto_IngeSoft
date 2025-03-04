@@ -30,3 +30,5 @@ class LoginFailure extends LoginState {
   @override
   List<Object> get props => [exception];
 }
+
+class NoToken extends LoginState {}

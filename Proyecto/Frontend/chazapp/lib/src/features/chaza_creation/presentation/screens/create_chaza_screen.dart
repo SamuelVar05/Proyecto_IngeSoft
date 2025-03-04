@@ -48,14 +48,15 @@ class _CreateChazaScreenState extends State<CreateChazaScreen> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       final loginBloc = context.read<LoginBloc>();
+      if (loginBloc.state is LoginFailure || loginBloc.state is NoToken) {
+        context.go("/login");
+        return;
+      }
       if (loginBloc.state is! LoginSuccess) {
         loginBloc.add(CheckAuthStatus());
         return;
       }
-      if (loginBloc.state is LoginFailure) {
-        context.go("/login");
-        return;
-      }
+
       final token = context.read<LoginBloc>().state is LoginSuccess
           ? (context.read<LoginBloc>().state as LoginSuccess).userEntity.token
           : null;

@@ -21,13 +21,17 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
+          if (state is LoginFailure || state is NoToken) {
+            context.go("/login");
+            return;
+          }
           if (state is! LoginSuccess) {
-            context.go('/');
+            context.read<LoginBloc>().add(CheckAuthStatus());
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
-            if (state is LoginFailure) {
+            if (state is LoginFailure || state is NoToken) {
               context.go("/");
               return const Center(
                 child: CircularProgressIndicator(),
@@ -138,9 +142,25 @@ class ProfileScreen extends StatelessWidget {
                                           itemCount: state.chazas.length,
                                           itemBuilder: (context, index) {
                                             final chaza = state.chazas[index];
-                                            return ListTile(
-                                              title: Text(chaza.nombre),
-                                              subtitle: Text(chaza.descripcion),
+                                            return GestureDetector(
+                                              onTap: () {
+                                                context.push('/chaza-detail2',
+                                                    extra: {
+                                                      'imageUrl':
+                                                          "https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt",
+                                                      'chaza': chaza,
+                                                      'isOwner': true,
+                                                      'schedule':
+                                                          "Lunes a viernes de 8:00 a.m. a 5:00 p.m.",
+                                                      'payment':
+                                                          "Efectivo, tarjeta",
+                                                    });
+                                              },
+                                              child: ListTile(
+                                                title: Text(chaza.nombre),
+                                                subtitle:
+                                                    Text(chaza.descripcion),
+                                              ),
                                             );
                                           },
                                         ),

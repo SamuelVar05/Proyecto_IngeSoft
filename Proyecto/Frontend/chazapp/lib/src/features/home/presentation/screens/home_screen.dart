@@ -1,3 +1,4 @@
+import 'package:chazapp/src/features/auth/presentation/bloc/login/login_event.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_bloc.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_event.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_state.dart';
@@ -42,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Map<String, dynamic>> chazas = List.generate(10, (index) {
     return {
       'isFavorite': false,
-      'isOwner': true,
+      'isOwner': false,
       'schedule': 'L-V 9:00am-5:00pm',
       'payment': 'Nequi,Daviplata',
       'imageUrl':
@@ -84,13 +85,23 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
+          if (state is LoginFailure || state is NoToken) {
+            context.go("/login");
+            return;
+          }
           if (state is! LoginSuccess) {
-            context.go('/');
+            context.read<LoginBloc>().add(CheckAuthStatus());
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+          if (state is LoginFailure || state is NoToken) {
+            context.go("/");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           if (state is! LoginSuccess) {
-            // context.go("/");
+            context.read<LoginBloc>().add(CheckAuthStatus());
             return const Center(
               child: CircularProgressIndicator(),
             );

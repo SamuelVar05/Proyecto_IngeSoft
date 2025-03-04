@@ -53,7 +53,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (result != null) {
       emit(LoginSuccess(LoginEntity(token: result)));
     } else {
-      emit(LoginInitial());
+      emit(NoToken());
     }
   }
 
