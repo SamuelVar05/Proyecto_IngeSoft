@@ -1,12 +1,19 @@
 import 'dart:io';
 import 'package:chazapp/src/config/themes/unchaza_theme.dart';
-import 'package:chazapp/src/features/home/presentation/widgets/custom_app_bar.dart';
+import 'package:chazapp/src/features/auth/presentation/bloc/login/login_bloc.dart';
+import 'package:chazapp/src/features/auth/presentation/bloc/login/login_state.dart';
+import 'package:chazapp/src/features/chaza_creation/presentation/bloc/chaza_creation/chaza_creation_bloc.dart';
+import 'package:chazapp/src/features/chaza_creation/presentation/bloc/chaza_creation/chaza_creation_event.dart';
+import 'package:chazapp/src/features/chaza_creation/presentation/bloc/chaza_creation/chaza_creation_state.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateChazaScreen extends StatefulWidget {
+  const CreateChazaScreen({super.key});
+
   @override
   _CreateChazaScreenState createState() => _CreateChazaScreenState();
 }
@@ -19,7 +26,7 @@ class _CreateChazaScreenState extends State<CreateChazaScreen> {
   final TextEditingController _scheduleController = TextEditingController();
   XFile? _image;
   final ImagePicker _picker = ImagePicker();
-  List<String> _selectedPayments = [];
+  final List<String> _selectedPayments = [];
 
   Future<void> _pickImage() async {
     final XFile? pickedFile =
@@ -39,8 +46,23 @@ class _CreateChazaScreenState extends State<CreateChazaScreen> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      // TODO: Enviar datos al backend
-      print("Formulario válido. Enviar datos...");
+      final token = context.read<LoginBloc>().state is LoginSuccess
+          ? (context.read<LoginBloc>().state as LoginSuccess).userEntity.token
+          : null;
+
+      if (token == null) {
+        context.go("/");
+        return;
+      }
+
+      context.read<ChazaCreationBloc>().add(
+            ChazaCreationRequested(
+              nombre: _nameController.text,
+              descripcion: _descriptionController.text,
+              ubicacion: _locationController.text,
+              token: token,
+            ),
+          );
     }
   }
 
@@ -155,14 +177,32 @@ class _CreateChazaScreenState extends State<CreateChazaScreen> {
                         textStyle: UNChazaTheme.textTheme.headlineMedium
                             ?.copyWith(color: UNChazaTheme.white),
                       ),
-                      CustomButton(
-                        text: "Guardar",
-                        buttonColor: UNChazaTheme.orange,
-                        textColor: UNChazaTheme.white,
-                        onPressed: _submitForm,
-                        textStyle: UNChazaTheme.textTheme.headlineMedium
-                            ?.copyWith(color: UNChazaTheme.white),
-                      ),
+                      BlocConsumer<ChazaCreationBloc, ChazaCreationState>(
+                          listener: (context, state) {
+                        if (state is ChazaCreationSuccess) {
+                          context.go("/profile");
+                        } else if (state is ChazaCreationFailure) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text(state.dioException.message ?? "Error"),
+                              backgroundColor: UNChazaTheme.red,
+                            ),
+                          );
+                        }
+                      }, builder: (context, state) {
+                        if (state is ChazaCreationLoading) {
+                          return const CircularProgressIndicator();
+                        }
+                        return CustomButton(
+                          text: "Guardar",
+                          buttonColor: UNChazaTheme.orange,
+                          textColor: UNChazaTheme.white,
+                          onPressed: _submitForm,
+                          textStyle: UNChazaTheme.textTheme.headlineMedium
+                              ?.copyWith(color: UNChazaTheme.white),
+                        );
+                      }),
                     ],
                   ),
                 ],
