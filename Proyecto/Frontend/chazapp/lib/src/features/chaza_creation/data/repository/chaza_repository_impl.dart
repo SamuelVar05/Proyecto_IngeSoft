@@ -22,12 +22,13 @@ class ChazaRepositoryImpl implements ChazaRepository {
   }) async {
     try {
       final chazaRequest = ChazaRequestModel(
-        idUsuario: idUsuario,
+        id_usuario: idUsuario,
         nombre: nombre,
         descripcion: descripcion,
         ubicacion: ubicacion,
-        idPhoto: idPhoto,
+        foto_id: idPhoto,
       );
+
       final httpResponse = await _chazaCreationService.createChaza(
           "Bearer $token", chazaRequest);
 
