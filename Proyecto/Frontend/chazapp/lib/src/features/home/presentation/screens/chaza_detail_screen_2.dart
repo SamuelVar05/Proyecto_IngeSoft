@@ -1,6 +1,7 @@
 import 'package:chazapp/src/features/home/presentation/widgets/custom_app_bar.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/custom_button.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/product_card.dart';
+import 'package:chazapp/src/features/product_creation/presentation/screens/create_product_screen.dart';
 import 'package:chazapp/src/features/profile/domain/enitites/chaza_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:chazapp/src/config/themes/unchaza_theme.dart';
@@ -218,7 +219,11 @@ class ChazaDetailScreen2 extends StatelessWidget {
                       text: "Agregar Producto",
                       buttonColor: UNChazaTheme.orange,
                       textColor: UNChazaTheme.white,
-                      onPressed: () => {},
+                      onPressed: () => {
+                        context.go("/create-product", extra: {
+                          "chaza": chaza,
+                        })
+                      },
                       icon: Icons.add_circle_outline_rounded,
                     ),
                   ListView.builder(

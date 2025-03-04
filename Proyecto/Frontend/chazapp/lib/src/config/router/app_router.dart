@@ -4,6 +4,7 @@ import 'package:chazapp/src/features/favorites/presentation/favorites_screen.dar
 import 'package:chazapp/src/features/home/presentation/screens/chaza_detail_screen.dart';
 import 'package:chazapp/src/features/home/presentation/screens/chaza_detail_screen_2.dart';
 import 'package:chazapp/src/features/home/presentation/screens/product_detail_screen.dart';
+import 'package:chazapp/src/features/product_creation/presentation/screens/create_product_screen.dart';
 import 'package:chazapp/src/features/profile/domain/enitites/chaza_entity.dart';
 import 'package:chazapp/src/features/profile/presentation/screens/profile_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -108,6 +109,14 @@ final GoRouter router = GoRouter(
             schedule: schedule,
             payment: payment,
           );
+        }),
+
+    GoRoute(
+        path: "/create-product",
+        builder: (context, state) {
+          final chazaData = state.extra as Map<String, dynamic>;
+          final ChazaEntity chaza = chazaData['chaza'];
+          return CreateProductScreen(chaza: chaza);
         }),
   ],
 );

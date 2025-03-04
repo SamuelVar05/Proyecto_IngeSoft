@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:chazapp/src/config/themes/unchaza_theme.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_bloc.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_event.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_state.dart';
+import 'package:chazapp/src/features/home/presentation/widgets/custom_button.dart';
 import 'package:chazapp/src/features/product_creation/domain/entities/category_entity.dart';
 import 'package:chazapp/src/features/product_creation/presentation/bloc/category/category_bloc.dart';
 import 'package:chazapp/src/features/product_creation/presentation/bloc/category/category_event.dart';
@@ -9,9 +13,10 @@ import 'package:chazapp/src/features/profile/domain/enitites/chaza_entity.dart';
 import 'package:go_router/go_router.dart';
 import 'package:chazapp/src/features/product_creation/presentation/bloc/category/category_state.dart';
 import 'package:chazapp/src/features/product_creation/presentation/bloc/products/products_bloc.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateProductScreen extends StatefulWidget {
   final ChazaEntity chaza;
@@ -27,16 +32,33 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _barcodeController = TextEditingController();
   final TextEditingController _anotherCategoryController =
       TextEditingController();
   final TextEditingController _anotherCategoryDescriptionController =
       TextEditingController();
   final ImagePicker _picker = ImagePicker();
 
-  List<CategoryEntity> categories = [];
-  CategoryEntity? categoriaSeleccionada;
+  //List<CategoryEntity> categories = [];
+
+  List<CategoryEntity> categories = [
+    const CategoryEntity(
+        id: "1", name: "Bebidas", description: "Refrescos y jugos"),
+    const CategoryEntity(
+        id: "2", name: "Snacks", description: "Aperitivos y bocadillos"),
+    const CategoryEntity(
+        id: "3", name: "Postres", description: "Dulces y repostería"),
+    const CategoryEntity(
+        id: "4",
+        name: "Comida rápida",
+        description: "Hamburguesas, pizzas, etc."),
+    const CategoryEntity(
+        id: "5", name: "Otra", description: "Categoría personalizada"),
+  ];
+
+  CategoryEntity? selectedCategory;
   bool isAnotherCategory = false;
-  XFile? image;
+  XFile? _image;
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -70,7 +92,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
       final name = _nameController.text;
       final description = _descriptionController.text;
       final price = _priceController.text as double;
-      final category = categoriaSeleccionada!;
+      final category = selectedCategory!;
 
       _createProduct(
           name, price, description, widget.chaza.id, category.id, token);
@@ -89,29 +111,253 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         );
   }
 
+  Future<void> _pickImage() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = pickedFile;
+      });
+    }
+  }
+
+  void _removeImage() {
+    setState(() {
+      _image = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CategoryBloc, CategoryState>(
-      listener: (context, state) {
-        if (state is CategoryCreatedState) {
-          final loginState = context.read<LoginBloc>().state;
-          if (loginState is LoginSuccess) {
-            _createProduct(
-              _nameController.text,
-              double.tryParse(_priceController.text) ?? 0.0,
-              _descriptionController.text,
-              widget.chaza.id,
-              state.category.id,
-              loginState.userEntity.token, // Obtener el token aquí
-            );
-          } else {
-            context.read<LoginBloc>().add(CheckAuthStatus());
-          }
+        listener: (context, state) {
+      if (state is CategoryCreatedState) {
+        final loginState = context.read<LoginBloc>().state;
+        if (loginState is LoginSuccess) {
+          _createProduct(
+            _nameController.text,
+            double.tryParse(_priceController.text) ?? 0.0,
+            _descriptionController.text,
+            widget.chaza.id,
+            state.category.id,
+            loginState.userEntity.token, // Obtener el token aquí
+          );
+        } else {
+          context.read<LoginBloc>().add(CheckAuthStatus());
         }
-      },
-      builder: (context, state) {
-        return Container();
-      },
-    );
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        backgroundColor: UNChazaTheme.white,
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: UNChazaTheme.orange),
+            onPressed: () => context.go("/profile"),
+          ),
+          title: Text("Crear Chaza",
+              style: UNChazaTheme.textTheme.displayLarge
+                  ?.copyWith(color: UNChazaTheme.orange)),
+          backgroundColor: UNChazaTheme.white,
+          centerTitle: false,
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: ConstrainedBox(
+                constraints:
+                    const BoxConstraints(maxWidth: 400), // Limita el ancho
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildLabel("Nombre"),
+                    _buildTextField(_nameController, "ej: Empanada"),
+                    _buildLabel("Categoria"),
+                    DropdownButtonFormField<CategoryEntity>(
+                      value: selectedCategory,
+                      decoration: InputDecoration(
+                        hintStyle: UNChazaTheme.textTheme.bodyLarge
+                            ?.copyWith(color: UNChazaTheme.deepGrey),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: const BorderSide(
+                              color: UNChazaTheme.deepGrey, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: const BorderSide(
+                              color: UNChazaTheme.orange, width: 2.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: const BorderSide(
+                              color: UNChazaTheme.red, width: 2.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: const BorderSide(
+                              color: UNChazaTheme.red, width: 2.0),
+                        ),
+                        errorStyle: UNChazaTheme.textTheme.bodySmall
+                            ?.copyWith(color: UNChazaTheme.red),
+                        filled: true,
+                        fillColor: UNChazaTheme.white,
+                        hintText: "Seleccione una categoría",
+                      ),
+                      items: categories.map((CategoryEntity category) {
+                        return DropdownMenuItem<CategoryEntity>(
+                          value: category,
+                          child: Text(category.name),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedCategory = value;
+                          isAnotherCategory = value?.name == "Otra";
+                        });
+                      },
+                      validator: (value) =>
+                          value == null ? "Seleccione una categoría" : null,
+                    ),
+                    if (isAnotherCategory) ...[
+                      _buildLabel("Nombre de la nueva categoría"),
+                      _buildTextField(
+                          _anotherCategoryController, "Ej: Comida saludable"),
+                      _buildLabel("Descripción de la nueva categoría"),
+                      _buildTextField(_anotherCategoryDescriptionController,
+                          "Ej: Productos saludables y orgánicos",
+                          maxLines: 3),
+                    ],
+                    const SizedBox(height: 20),
+                    _buildLabel("Precio"),
+                    _buildTextField(_priceController, "ej 5.000"),
+                    _buildLabel("Foto"),
+                    CustomButton(
+                      text: "Adjuntar foto",
+                      buttonColor: UNChazaTheme.orange,
+                      textColor: UNChazaTheme.white,
+                      onPressed: _pickImage,
+                      icon: Icons.image,
+                    ),
+                    const SizedBox(height: 10),
+                    if (_image != null)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.file(
+                              File(_image!.path),
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete,
+                                color: UNChazaTheme.red),
+                            onPressed: _removeImage,
+                          ),
+                        ],
+                      ),
+                    _buildLabel("Código de Barras"),
+                    _buildTextField(_barcodeController, "123456789"),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CustomButton(
+                          text: "Cancelar",
+                          buttonColor: UNChazaTheme.deepGrey,
+                          textColor: UNChazaTheme.white,
+                          onPressed: () => Navigator.pop(context),
+                          textStyle: UNChazaTheme.textTheme.headlineMedium
+                              ?.copyWith(color: UNChazaTheme.white),
+                        ),
+                        //TODO: Implementar el bloc
+                        // BlocConsumer<ChazaCreationBloc, ChazaCreationState>(
+                        //     listener: (context, state) {
+                        //   if (state is CreationSuccess) {
+                        //     context.go("/profile");
+                        //   } else if (state is ChazaCreationFailure) {
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(
+                        //         content:
+                        //             Text(state.dioException.message ?? "Error"),
+                        //         backgroundColor: UNChazaTheme.red,
+                        //       ),
+                        //     );
+                        //   }
+                        // }, builder: (context, state) {
+                        //   if (state is ChazaCreationLoading) {
+                        //     return const CircularProgressIndicator();
+                        //   }
+                        //   return CustomButton(
+                        //     text: "Guardar",
+                        //     buttonColor: UNChazaTheme.orange,
+                        //     textColor: UNChazaTheme.white,
+                        //     onPressed: _submitForm,
+                        //     textStyle: UNChazaTheme.textTheme.headlineMedium
+                        //         ?.copyWith(color: UNChazaTheme.white),
+                        //   );
+                        // }),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    });
   }
+}
+
+Widget _buildLabel(String text) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10, bottom: 5),
+    child: Text(text, style: UNChazaTheme.textTheme.headlineMedium),
+  );
+}
+
+Widget _buildTextField(TextEditingController controller, String hintText,
+    {int maxLines = 1}) {
+  return TextFormField(
+    controller: controller,
+    maxLines: maxLines,
+    decoration: InputDecoration(
+      hintStyle: UNChazaTheme.textTheme.bodyLarge
+          ?.copyWith(color: UNChazaTheme.deepGrey),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: const BorderSide(color: UNChazaTheme.deepGrey, width: 2.0),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: const BorderSide(color: UNChazaTheme.orange, width: 2.0),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: const BorderSide(color: UNChazaTheme.red, width: 2.0),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: const BorderSide(color: UNChazaTheme.red, width: 2.0),
+      ),
+      errorStyle:
+          UNChazaTheme.textTheme.bodySmall?.copyWith(color: UNChazaTheme.red),
+      filled: true,
+      fillColor: UNChazaTheme.white,
+      hintText: hintText,
+    ),
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return "Este campo es obligatorio";
+      }
+      return null;
+    },
+  );
 }
