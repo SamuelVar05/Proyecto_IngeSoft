@@ -3,11 +3,11 @@ import 'package:chazapp/src/core/usecase/usecase.dart';
 import 'package:chazapp/src/features/product_creation/domain/entities/category_entity.dart';
 import 'package:chazapp/src/features/product_creation/domain/repository/category_repository.dart';
 
-class CreateCategory
+class CreateCategoryUseCase
     implements UseCase<DataState<CategoryEntity>, Map<String, dynamic>> {
   final CategoryRepository _categoryRepository;
 
-  CreateCategory(this._categoryRepository);
+  CreateCategoryUseCase(this._categoryRepository);
 
   @override
   Future<DataState<CategoryEntity>> call(
