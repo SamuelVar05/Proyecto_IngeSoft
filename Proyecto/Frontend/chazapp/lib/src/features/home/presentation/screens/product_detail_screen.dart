@@ -26,84 +26,86 @@ class ProductDetailScreen extends StatelessWidget {
       appBar: const CustomAppBar(type: AppBarType.back),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Column(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Column(
+                  children: [
+                    Text(productName,
+                        style: UNChazaTheme.textTheme.displayLarge
+                            ?.copyWith(color: UNChazaTheme.orange)),
+                    const SizedBox(height: 16),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        imageUrl,
+                        width: 250,
+                        height: 250,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: UNChazaTheme.yellow,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '\$${price.toStringAsFixed(0)}',
+                        style: UNChazaTheme.textTheme.displayMedium,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(description, style: UNChazaTheme.textTheme.bodyLarge),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                    color: UNChazaTheme.orange.withAlpha(40),
+                    borderRadius: BorderRadius.circular(20)),
+                padding: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+                child: Text('Ubicación',
+                    style: UNChazaTheme.textTheme.headlineMedium?.copyWith(
+                      color: UNChazaTheme.orange,
+                    )),
+              ),
+              const SizedBox(height: 10),
+              Row(
                 children: [
-                  Text(productName,
-                      style: UNChazaTheme.textTheme.displayLarge
-                          ?.copyWith(color: UNChazaTheme.orange)),
-                  const SizedBox(height: 16),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      imageUrl,
-                      width: 250,
-                      height: 250,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: UNChazaTheme.yellow,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      '\$${price.toStringAsFixed(0)}',
-                      style: UNChazaTheme.textTheme.displayMedium,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(description, style: UNChazaTheme.textTheme.bodyLarge),
+                  const Icon(Icons.place, size: 22, color: UNChazaTheme.orange),
+                  const SizedBox(width: 4),
+                  Text('Chaza "$chazaName"',
+                      style: UNChazaTheme.textTheme.headlineSmall),
                 ],
               ),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              decoration: BoxDecoration(
-                  color: UNChazaTheme.orange.withAlpha(40),
-                  borderRadius: BorderRadius.circular(20)),
-              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-              child: Text('Ubicación',
-                  style: UNChazaTheme.textTheme.headlineMedium?.copyWith(
-                    color: UNChazaTheme.orange,
-                  )),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const Icon(Icons.place, size: 22, color: UNChazaTheme.orange),
-                const SizedBox(width: 4),
-                Text('Chaza "$chazaName"',
-                    style: UNChazaTheme.textTheme.headlineSmall),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Container(
-              decoration: BoxDecoration(
-                  color: UNChazaTheme.orange.withAlpha(40),
-                  borderRadius: BorderRadius.circular(20)),
-              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-              child: Text('Categoria',
-                  style: UNChazaTheme.textTheme.headlineMedium?.copyWith(
-                    color: UNChazaTheme.orange,
-                  )),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const Icon(Icons.restaurant,
-                    size: 18, color: UNChazaTheme.orange),
-                const SizedBox(width: 4),
-                Text(category, style: UNChazaTheme.textTheme.headlineSmall),
-              ],
-            ),
-          ],
+              const SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                    color: UNChazaTheme.orange.withAlpha(40),
+                    borderRadius: BorderRadius.circular(20)),
+                padding: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+                child: Text('Categoria',
+                    style: UNChazaTheme.textTheme.headlineMedium?.copyWith(
+                      color: UNChazaTheme.orange,
+                    )),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  const Icon(Icons.restaurant,
+                      size: 18, color: UNChazaTheme.orange),
+                  const SizedBox(width: 4),
+                  Text(category, style: UNChazaTheme.textTheme.headlineSmall),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

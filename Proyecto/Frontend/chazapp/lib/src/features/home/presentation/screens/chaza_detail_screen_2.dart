@@ -31,15 +31,13 @@ class ChazaDetailScreen2 extends StatelessWidget {
   List<Map<String, dynamic>> generateProducts(String chazaName) {
     return List.generate(5, (index) {
       return {
-        'imageUrl':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCE4TTuebY9YT632lGpqCziDJqwI4dD4DW2w&s',
-        'productName': 'Cappuchino',
+        'imageUrl': 'coca.jpg',
+        'productName': 'Coca Cola ',
         'chazaName': chazaName,
         'category': 'Bebidas',
-        'price': 7000,
+        'price': 17000,
         'isFavorite': false,
-        'description':
-            'Delicioso cafe con leche entera, espuma y azucar ¡Sencillo, pero lleno de sabor!'
+        'description': 'Deliciosa coca cola ¡Sencillo, pero lleno de sabor!'
       };
     });
   }
@@ -60,6 +58,7 @@ class ChazaDetailScreen2 extends StatelessWidget {
                       ?.copyWith(color: UNChazaTheme.orange)),
               const SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,8 +74,10 @@ class ChazaDetailScreen2 extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20)),
                               padding: const EdgeInsets.symmetric(
                                   vertical: 3, horizontal: 8),
-                              child: Text(location,
-                                  style: UNChazaTheme.textTheme.headlineSmall),
+                              child: Text(
+                                location,
+                                style: UNChazaTheme.textTheme.headlineSmall,
+                              ),
                             ),
                           ],
                         ),
@@ -115,10 +116,9 @@ class ChazaDetailScreen2 extends StatelessWidget {
                           ],
                         ),
                       ]),
-                  const SizedBox(width: 16),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
+                    child: Image.asset(
                       imageUrl,
                       width: 160,
                       height: 160,

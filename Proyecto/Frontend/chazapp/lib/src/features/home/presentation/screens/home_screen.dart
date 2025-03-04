@@ -2,6 +2,8 @@ import 'package:chazapp/src/features/auth/presentation/bloc/login/login_event.da
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_bloc.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_event.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_state.dart';
+import 'package:chazapp/src/features/home/presentation/screens/chaza_detail_screen.dart';
+import 'package:chazapp/src/features/profile/domain/enitites/chaza_entity.dart';
 import 'package:go_router/go_router.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/product_card.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/search_bar_widget.dart';
@@ -42,13 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
   // Lista de chazas simulada
   final List<Map<String, dynamic>> chazas = List.generate(10, (index) {
     return {
+      'id': index.toString(),
       'isFavorite': false,
       'isOwner': false,
       'schedule': 'L-V 9:00am-5:00pm',
       'payment': 'Nequi,Daviplata',
-      'imageUrl':
-          'https://i.pinimg.com/236x/15/ee/bf/15eebf77c19a47dd2c413f8b844bd8e9.jpg',
-      'chazaName': 'Cafesito UNAL',
+      'imageUrl': 'chaza_default.jpg',
+      'chazaName': 'Chazita HOME',
       'location': 'CyT',
       'description':
           'En nuestra chaza Cafesito para todos encontrarás bebidas calientes y snacks con un toque casero y sabores irresistibles. Es el lugar perfecto para disfrutar de una comida deliciosa y rápida, como si la preparara tu barista de confianza. ¡Siempre con el mejor sabor y a la orden!',
@@ -191,20 +193,37 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               else
                 SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                  final chaza = chazas[index];
-                  return ChazaCard(
-                    isFavorite: chaza['isFavorite'],
-                    isOwner: chaza['isOwner'],
-                    schedule: chaza['schedule'],
-                    payment: chaza['payment'],
-                    imageUrl: chaza['imageUrl'],
-                    chazaName: chaza['chazaName'],
-                    location: chaza['location'],
-                    description: chaza['description'],
-                    onFavoritePressed: () => toggleFavorite(index, false),
-                  );
-                }, childCount: chazas.length)),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final chaza = chazas[index];
+                      final ChazaEntity chazaEntity = ChazaEntity(
+                        id: chaza['id'],
+                        nombre: chaza['chazaName'],
+                        descripcion: chaza['description'],
+                      );
+
+                      return ChazaCard(
+                        isFavorite: chaza['isFavorite'],
+                        isOwner: chaza['isOwner'],
+                        imageUrl: chaza['imageUrl'],
+                        chaza: chazaEntity,
+                        onTap: () {
+                          context.push('/chaza-detail', extra: {
+                            'imageUrl': chaza['imageUrl'],
+                            'chazaName': chaza['chazaName'],
+                            'schedule': chaza['schedule'],
+                            'location': chaza['location'],
+                            'payment': chaza['payment'],
+                            'description': chaza['description'],
+                            'isOwner': chaza['isOwner'],
+                          });
+                        },
+                        onFavoritePressed: () => toggleFavorite(index, false),
+                      );
+                    },
+                    childCount: chazas.length,
+                  ),
+                ),
             ],
           );
         }),
