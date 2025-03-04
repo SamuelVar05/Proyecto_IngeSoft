@@ -22,8 +22,6 @@ class ChazaCreationBloc extends Bloc<ChazaCreationEvent, ChazaCreationState> {
     if (profileResponse is DataSuccess) {
       final profile = profileResponse.data!;
 
-      print(profile.idUser);
-
       ChazaRequestEntity chazaRequestEntity = ChazaRequestEntity(
           id_usuario: profile.idUser,
           nombre: event.nombre,
