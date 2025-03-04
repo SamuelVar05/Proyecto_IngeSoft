@@ -2,6 +2,7 @@ import 'package:chazapp/injection_container.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_bloc.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/login/login_event.dart';
 import 'package:chazapp/src/features/auth/presentation/bloc/register/register_bloc.dart';
+import 'package:chazapp/src/features/chaza_creation/presentation/bloc/chaza_creation/chaza_creation_bloc.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => sl<LoginBloc>()..add(CheckAuthStatus())),
         BlocProvider(create: (_) => sl<RegisterBloc>()),
         BlocProvider(create: (_) => sl<ProductosBloc>()),
+        BlocProvider(create: (_) => sl<ChazaCreationBloc>()),
       ],
       child: MaterialApp.router(
         routerConfig: router,
