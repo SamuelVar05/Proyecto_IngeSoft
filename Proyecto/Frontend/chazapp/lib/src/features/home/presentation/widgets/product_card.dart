@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
   final VoidCallback onFavoritePressed;
 
   ProductCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.productName,
     required this.chazaName,
@@ -22,7 +22,7 @@ class ProductCard extends StatelessWidget {
     required this.isFavorite,
     required this.onFavoritePressed,
     required this.description,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
