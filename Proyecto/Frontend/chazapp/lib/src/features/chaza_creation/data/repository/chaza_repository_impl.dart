@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:chazapp/src/core/network/data_state.dart';
@@ -19,17 +18,19 @@ class ChazaRepositoryImpl implements ChazaRepository {
     required descripcion,
     ubicacion,
     idPhoto,
+    required token,
   }) async {
     try {
       final chazaRequest = ChazaRequestModel(
-        idUsuario: idUsuario,
+        id_usuario: idUsuario,
         nombre: nombre,
         descripcion: descripcion,
         ubicacion: ubicacion,
-        idPhoto: idPhoto,
+        foto_id: idPhoto,
       );
-      final httpResponse =
-          await _chazaCreationService.createChaza(chazaRequest);
+
+      final httpResponse = await _chazaCreationService.createChaza(
+          "Bearer $token", chazaRequest);
 
       if (httpResponse.response.statusCode == HttpStatus.created) {
         return const DataSuccess(null);

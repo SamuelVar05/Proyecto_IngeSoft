@@ -55,7 +55,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               alignment: Alignment.centerLeft,
               child: Container(
                 decoration: BoxDecoration(
-                  color: UNChazaTheme.white.withValues(alpha: 0.3),
+                  color: UNChazaTheme.white.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 padding:
@@ -118,7 +118,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 if (isSearchingProducts)
                   CustomButton(
                     text: "Escanear",
-                    buttonColor: UNChazaTheme.white.withValues(alpha: 0.3),
+                    buttonColor: UNChazaTheme.white.withOpacity(0.3),
                     textColor: UNChazaTheme.white,
                     icon: Icons.qr_code_scanner,
                     onPressed: widget.onScan,
@@ -126,7 +126,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 if (isSearchingProducts) const SizedBox(width: 10),
                 CustomButton(
                   text: "Filtrar",
-                  buttonColor: UNChazaTheme.white.withValues(alpha: 0.3),
+                  buttonColor: UNChazaTheme.white.withOpacity(0.3),
                   textColor: UNChazaTheme.white,
                   icon: Icons.filter_list,
                   onPressed: isSearchingProducts

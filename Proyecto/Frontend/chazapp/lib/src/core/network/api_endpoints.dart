@@ -4,3 +4,5 @@ const String registerEndpoint = "/users/register";
 const String profileEndpoint = "/users/info";
 const String chazaEndpoint = "/chazas/user/{userId}";
 const String chazaCreationEndpoint = "/chazas/create";
+const String productosEndpoint = "/product";
+const String categoriasEndpoint = "/category";

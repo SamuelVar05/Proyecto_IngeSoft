@@ -12,5 +12,7 @@ abstract class ChazaCreationService {
 
   @POST(chazaCreationEndpoint)
   Future<HttpResponse<ApiResponse<dynamic>>> createChaza(
-      @Body() ChazaRequestModel body);
+    @Header("Authorization") String token,
+    @Body() ChazaRequestModel body,
+  );
 }
