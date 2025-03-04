@@ -7,5 +7,6 @@ abstract class ChazaRepository {
     required descripcion,
     ubicacion,
     idPhoto,
+    required token,
   });
 }

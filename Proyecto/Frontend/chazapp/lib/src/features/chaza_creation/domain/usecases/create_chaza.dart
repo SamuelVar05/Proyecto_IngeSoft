@@ -3,19 +3,24 @@ import 'package:chazapp/src/core/usecase/usecase.dart';
 import 'package:chazapp/src/features/chaza_creation/domain/entity/chaza_request_entity.dart';
 import 'package:chazapp/src/features/chaza_creation/domain/repository/chaza_repository.dart';
 
-class CreateChaza implements UseCase<DataState<void>, ChazaRequestEntity> {
+class CreateChazaUseCase implements UseCase<DataState<void>, Map<String, dynamic>> {
   final ChazaRepository _chazaRepository;
 
-  CreateChaza(this._chazaRepository);
+  CreateChazaUseCase(this._chazaRepository);
 
   @override
-  Future<DataState<void>> call({required ChazaRequestEntity params}) {
+  Future<DataState<void>> call({required Map<String, dynamic> params}) {
+
+    final String token = params['token'];
+    final ChazaRequestEntity chazaRequestEntity = params['chazaRequestEntity'];
+
     return _chazaRepository.createChaza(
-      idUsuario: params.idUsuario,
-      nombre: params.nombre,
-      descripcion: params.descripcion,
-      ubicacion: params.ubicacion,
-      idPhoto: params.idPhoto,
+      idUsuario: chazaRequestEntity.idUsuario,
+      nombre: chazaRequestEntity.nombre,
+      descripcion: chazaRequestEntity.descripcion,
+      ubicacion: chazaRequestEntity.ubicacion,
+      idPhoto: chazaRequestEntity.idPhoto,
+      token: token,
     );
   }
 }
