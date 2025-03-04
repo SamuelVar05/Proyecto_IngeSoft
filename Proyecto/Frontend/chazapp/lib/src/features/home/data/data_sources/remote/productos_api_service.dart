@@ -11,5 +11,7 @@ abstract class ProductosApiService {
   factory ProductosApiService(Dio dio) = _ProductosApiService;
 
   @GET(productosEndpoint)
-  Future<HttpResponse<ApiResponse<List<ProductoModel>>>> getProductos();
+  Future<HttpResponse<ApiResponse<List<ProductoModel>>>> getProductos(
+    @Header("Authorization") String token,
+  );
 }

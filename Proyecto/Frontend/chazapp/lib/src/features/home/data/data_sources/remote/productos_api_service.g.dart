@@ -24,10 +24,12 @@ class _ProductosApiService implements ProductosApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<ApiResponse<List<ProductoModel>>>> getProductos() async {
+  Future<HttpResponse<ApiResponse<List<ProductoModel>>>> getProductos(
+      String token) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options =
         _setStreamType<HttpResponse<ApiResponse<List<ProductoModel>>>>(Options(
