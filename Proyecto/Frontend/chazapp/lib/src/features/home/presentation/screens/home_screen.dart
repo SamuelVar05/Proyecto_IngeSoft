@@ -1,3 +1,7 @@
+import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_bloc.dart';
+import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_event.dart';
+import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_state.dart';
+import 'package:go_router/go_router.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/product_card.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/search_bar_widget.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/chaza_card.dart';
@@ -71,14 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.select<LoginBloc, String>((bloc) {
-      final state = bloc.state;
-      if (state is LoginSuccess) {
-        return state.userEntity.token;
-      }
-      throw Exception('No se pudo obtener el token');
-    });
-
     return Scaffold(
       backgroundColor: UNChazaTheme.white,
       appBar: const CustomAppBar(
@@ -86,45 +82,105 @@ class _HomeScreenState extends State<HomeScreen> {
         imageUrl:
             'https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt',
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: false, // No se queda fijo
-            floating: true,
-            snap: true, // Se oculta al hacer scroll
-            backgroundColor: UNChazaTheme.orange,
-            elevation: 0,
-            //shadowColor: Colors.transparent,
-            //forceMaterialTransparency: true,
+      body: BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
+          if (state is! LoginSuccess) {
+            context.go('/');
+          }
+        },
+        child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+          if (state is! LoginSuccess) {
+            // context.go("/");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-            expandedHeight: 230,
-            flexibleSpace: FlexibleSpaceBar(
-              background: SearchBarWidget(
-                userName: "Juliana",
-                onSearch: (query) => print("Buscar: $query"),
-                onScan: () => print("Escanear producto"),
-                onFilterProducts: () => print("Filtrar productos"),
-                onFilterChazas: () => print("Filtrar chazas"),
-                onToggleSearch: updateSearchMode, // Permite cambiar la vista
+          final token = (state).userEntity.token;
+
+          context.read<ProductosBloc>().add(LoadProductsEvent(token: token));
+          return CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                pinned: false, // No se queda fijo
+                floating: true,
+                snap: true, // Se oculta al hacer scroll
+                backgroundColor: UNChazaTheme.orange,
+                elevation: 0,
+                //shadowColor: Colors.transparent,
+                //forceMaterialTransparency: true,
+
+                expandedHeight: 230,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: SearchBarWidget(
+                    userName: "Juliana",
+                    onSearch: (query) => print("Buscar: $query"),
+                    onScan: () => print("Escanear producto"),
+                    onFilterProducts: () => print("Filtrar productos"),
+                    onFilterChazas: () => print("Filtrar chazas"),
+                    onToggleSearch:
+                        updateSearchMode, // Permite cambiar la vista
+                  ),
+                ),
               ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                if (isSearchingProducts) {
-                  final product = products[index];
-                  return ProductCard(
-                    imageUrl: product['imageUrl'],
-                    productName: product['productName'],
-                    chazaName: product['chazaName'],
-                    category: product['category'],
-                    price: product['price'],
-                    isFavorite: product['isFavorite'],
-                    description: product['description'],
-                    onFavoritePressed: () => toggleFavorite(index, true),
-                  );
-                } else {
+              if (isSearchingProducts)
+                BlocBuilder<ProductosBloc, ProductosState>(
+                  builder: (context, state) {
+                    if (state is ProductosLoading) {
+                      return const SliverFillRemaining(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: UNChazaTheme.orange,
+                          ),
+                        ),
+                      );
+                    } else if (state is ProductosLoaded) {
+                      if (state.productos.isEmpty) {
+                        return const SliverFillRemaining(
+                          child: Center(
+                            child: Text('No hay productos'),
+                          ),
+                        );
+                      }
+                      return SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final product = state.productos[index];
+                            return ProductCard(
+                              imageUrl:
+                                  "https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt",
+                              productName: product.name,
+                              chazaName: "Chaza",
+                              category: "Comida",
+                              price: product.price as int,
+                              isFavorite: false,
+                              description: product.description,
+                              onFavoritePressed: () =>
+                                  toggleFavorite(index, true),
+                            );
+                          },
+                          childCount: state.productos.length,
+                        ),
+                      );
+                    } else if (state is ProductosError) {
+                      return SliverFillRemaining(
+                        child: Center(
+                          child: Text(
+                              'Error cargando productos ${state.exception}'),
+                        ),
+                      );
+                    } else {
+                      return const SliverFillRemaining(
+                        child: Center(
+                          child: Text('Error desconocido'),
+                        ),
+                      );
+                    }
+                  },
+                )
+              else
+                SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
                   final chaza = chazas[index];
                   return ChazaCard(
                     isFavorite: chaza['isFavorite'],
@@ -137,12 +193,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     description: chaza['description'],
                     onFavoritePressed: () => toggleFavorite(index, false),
                   );
-                }
-              },
-              childCount: isSearchingProducts ? products.length : chazas.length,
-            ),
-          ),
-        ],
+                }, childCount: chazas.length)),
+            ],
+          );
+        }),
       ),
     );
   }
