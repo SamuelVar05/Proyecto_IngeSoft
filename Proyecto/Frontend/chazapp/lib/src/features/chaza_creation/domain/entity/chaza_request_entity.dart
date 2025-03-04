@@ -1,15 +1,17 @@
+// ignore_for_file: non_constant_identifier_names
+
 class ChazaRequestEntity {
-  final String idUsuario;
+  final String id_usuario;
   final String nombre;
   final String descripcion;
   final String? ubicacion;
-  final int? idPhoto;
+  final int? foto_id;
 
   ChazaRequestEntity({
-    required this.idUsuario,
+    required this.id_usuario,
     required this.nombre,
     required this.descripcion,
     this.ubicacion,
-    this.idPhoto,
+    this.foto_id,
   });
 }
