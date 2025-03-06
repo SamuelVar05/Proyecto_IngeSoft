@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginFailure || state is NoToken) {
-            context.go("/login");
+            context.go("/");
           } else if (state is! LoginSuccess) {
             context.read<LoginBloc>().add(CheckAuthStatus());
           }

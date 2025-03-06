@@ -82,7 +82,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
     if (_formKey.currentState!.validate()) {
       final loginBloc = context.read<LoginBloc>();
       if (loginBloc.state is LoginFailure || loginBloc.state is NoToken) {
-        context.go("/login");
+        context.go("/");
         return;
       }
       if (loginBloc.state is! LoginSuccess) {

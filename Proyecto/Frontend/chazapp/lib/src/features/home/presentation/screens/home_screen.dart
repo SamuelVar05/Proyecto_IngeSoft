@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'isOwner': false,
       'schedule': 'L-V 9:00am-5:00pm',
       'payment': 'Nequi,Daviplata',
-      'imageUrl': 'chaza_default.jpg',
+      'imageUrl': 'assets/chaza_default.jpg',
       'chazaName': 'Chazita HOME',
       'location': 'CyT',
       'description':
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginFailure || state is NoToken) {
-            context.go("/login");
+            context.go("/");
             return;
           }
           if (state is! LoginSuccess) {
@@ -139,6 +139,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               } else if (state is ProductosError) {
+                if (state.exception.response?.statusCode == 401) {
+                  context.read<LoginBloc>().add(LogoutRequested());
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
                 return Center(
                   child: Text('Error cargando productos ${state.exception}'),
                 );
