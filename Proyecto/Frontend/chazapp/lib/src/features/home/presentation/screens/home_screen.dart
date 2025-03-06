@@ -162,7 +162,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     flexibleSpace: FlexibleSpaceBar(
                       background: SearchBarWidget(
                         userName: "Juliana",
-                        onSearch: (query) => print("Buscar: $query"),
+                        onSearch: (query) {
+                          final state = context.read<ProductosBloc>().state;
+                          if (state is ProductosLoaded) {
+                            _filterProducts(query, state.productos);
+                          }
+                        },
                         onScan: () => print("Escanear producto"),
                         onFilterProducts: () => print("Filtrar productos"),
                         onFilterChazas: () => print("Filtrar chazas"),
@@ -183,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           );
                         } else if (state is ProductosLoaded) {
-                          if (state.productos.isEmpty) {
+                          if (_productsToShow.isEmpty) {
                             return const SliverFillRemaining(
                               child: Center(
                                 child: Text('No hay productos'),
@@ -193,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (context, index) {
-                                final product = state.productos[index];
+                                final product = _productsToShow[index];
                                 return ProductCard(
                                   imageUrl:
                                       "https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt",
@@ -207,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       toggleFavorite(index, true),
                                 );
                               },
-                              childCount: state.productos.length,
+                              childCount: _productsToShow.length,
                             ),
                           );
                         } else if (state is ProductosError) {
