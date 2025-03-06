@@ -59,22 +59,13 @@ class ProfileScreen extends StatelessWidget {
                   if (state is ProfileSuccess) {
                     return Scaffold(
                       appBar: const CustomAppBar(type: AppBarType.profile),
+                      backgroundColor: UNChazaTheme.white,
                       body: SingleChildScrollView(
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Mi perfil',
-                                  style: UNChazaTheme.textTheme.displayLarge
-                                      ?.copyWith(
-                                    color: UNChazaTheme.orange,
-                                  ),
-                                ),
-                              ),
                               const SizedBox(height: 20),
                               _buildProfileHeader(state),
                               const SizedBox(height: 10),
@@ -131,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Juliana Paez', style: UNChazaTheme.textTheme.displayMedium),
+            Text('Mi Perfil', style: UNChazaTheme.textTheme.displayLarge),
             Text(state.profileEntity.email,
                 style: UNChazaTheme.textTheme.bodyLarge),
             const SizedBox(height: 5),

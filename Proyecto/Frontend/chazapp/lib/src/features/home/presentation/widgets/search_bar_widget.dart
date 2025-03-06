@@ -43,7 +43,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Text("Hola, ${widget.userName}!",
+            child: Text("Bienvenido(a) a UN Chaza!",
                 style: UNChazaTheme.textTheme.displayMedium
                     ?.copyWith(color: UNChazaTheme.white)),
           ),
