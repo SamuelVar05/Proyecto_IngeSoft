@@ -200,12 +200,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               (context, index) {
                                 final product = _productsToShow[index];
                                 return ProductCard(
-                                  imageUrl:
-                                      "https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt",
+                                  imageUrl: "assets/chocolate.jpg",
                                   productName: product.name,
                                   chazaName: "Chaza",
                                   category: "Comida",
-                                  price: product.price as int,
+                                  price: product.price.toInt(),
                                   isFavorite: false,
                                   description: product.description,
                                   onFavoritePressed: () =>
