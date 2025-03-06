@@ -67,9 +67,11 @@ class ChazaCard extends StatelessWidget {
                           const Icon(Icons.place,
                               size: 16, color: UNChazaTheme.orange),
                           const SizedBox(width: 4),
-                          Text(
-                            chaza.ubicacion!,
-                            style: UNChazaTheme.textTheme.bodyLarge,
+                          Expanded(
+                            child: Text(
+                              chaza.ubicacion!,
+                              style: UNChazaTheme.textTheme.bodyLarge,
+                            ),
                           ),
                         ],
                       ),
@@ -84,6 +86,7 @@ class ChazaCard extends StatelessWidget {
                   ],
                 ),
               ),
+              
               SizedBox(
                 height: 130,
                 child: Column(

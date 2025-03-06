@@ -24,7 +24,7 @@ class ChazaDetailScreen2 extends StatelessWidget {
 
   late String chazaName = chaza.nombre;
   late String location =
-      chaza.ubicacion == "" ? 'Ubicación no especificada' : chaza.ubicacion!;
+      chaza.ubicacion == "" ? 'Sin ubicación' : chaza.ubicacion!;
   late String description = chaza.descripcion;
 
   // Simulación de productos de la chaza
@@ -116,6 +116,9 @@ class ChazaDetailScreen2 extends StatelessWidget {
                           ],
                         ),
                       ]),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
