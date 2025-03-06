@@ -121,11 +121,10 @@ class ProfileScreen extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(80),
-          child: Image.network(
-            'https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt',
-            width: 140,
-            height: 140,
-            fit: BoxFit.cover,
+          child: const CircleAvatar(
+            radius: 70,
+            backgroundImage: NetworkImage(
+                'https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt'),
           ),
         ),
         const SizedBox(width: 10),
@@ -174,12 +173,13 @@ class ProfileScreen extends StatelessWidget {
                     id: chaza.id,
                     nombre: chaza.nombre,
                     descripcion: chaza.descripcion,
+                    ubicacion: chaza.ubicacion ?? "",
                   );
                   return ChazaCard(
                     onTap: () {
                       context.push('/chaza-detail2', extra: {
-                        'imageUrl': 'chaza_profile.jpg',
-                        'chaza': chaza,
+                        'imageUrl': 'assets/chaza_profile.jpg',
+                        'chaza': chazaEntity,
                         'isOwner': true,
                         'schedule': "Own schedule",
                         'payment': "Efectivo, tarjeta",
@@ -187,7 +187,7 @@ class ProfileScreen extends StatelessWidget {
                     },
                     isFavorite: false,
                     isOwner: true,
-                    imageUrl: "chaza_profile.jpg",
+                    imageUrl: "assets/chaza_profile.jpg",
                     chaza: chazaEntity,
                     onFavoritePressed: () {},
                   );

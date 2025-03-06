@@ -31,7 +31,7 @@ class ChazaDetailScreen2 extends StatelessWidget {
   List<Map<String, dynamic>> generateProducts(String chazaName) {
     return List.generate(5, (index) {
       return {
-        'imageUrl': 'coca.jpg',
+        'imageUrl': 'assets/coca.jpg',
         'productName': 'Coca Cola ',
         'chazaName': chazaName,
         'category': 'Bebidas',
