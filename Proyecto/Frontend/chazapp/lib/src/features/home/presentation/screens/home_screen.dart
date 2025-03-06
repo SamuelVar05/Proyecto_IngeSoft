@@ -2,7 +2,7 @@ import 'package:chazapp/src/features/auth/presentation/bloc/login/login_event.da
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_bloc.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_event.dart';
 import 'package:chazapp/src/features/home/presentation/bloc/productos/productos_state.dart';
-import 'package:chazapp/src/features/home/presentation/screens/chaza_detail_screen.dart';
+import 'package:chazapp/src/features/product_creation/domain/entities/product_entity.dart';
 import 'package:chazapp/src/features/profile/domain/enitites/chaza_entity.dart';
 import 'package:go_router/go_router.dart';
 import 'package:chazapp/src/features/home/presentation/widgets/product_card.dart';
@@ -112,155 +112,159 @@ class _HomeScreenState extends State<HomeScreen> {
             context.read<LoginBloc>().add(CheckAuthStatus());
           }
         },
-        child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-          if (state is LoginFailure || state is NoToken) {
-            context.go("/");
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is! LoginSuccess) {
-            context.read<LoginBloc>().add(CheckAuthStatus());
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final token = (state).userEntity.token;
-
-          context.read<ProductosBloc>().add(LoadProductsEvent(token: token));
-          return BlocBuilder<ProductosBloc, ProductosState>(
-              builder: (context, state) {
-            if (state is ProductosLoading) {
+        child: BlocBuilder<LoginBloc, LoginState>(
+          builder: (context, state) {
+            if (state is LoginFailure || state is NoToken) {
+              context.go("/");
               return const Center(
-                child: CircularProgressIndicator(
-                  color: UNChazaTheme.orange,
-                ),
+                child: CircularProgressIndicator(),
               );
-            } else if (state is ProductosError) {
-              return Center(
-                child: Text('Error cargando productos ${state.exception}'),
-              );
-            } else if (state is ProductosLoaded) {
-              if (_productsToShow.isEmpty) {
-                _productsToShow = state.productos;
-              }
             }
-            return CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  pinned: false, // No se queda fijo
-                  floating: true,
-                  snap: true, // Se oculta al hacer scroll
-                  backgroundColor: UNChazaTheme.orange,
-                  elevation: 0,
-                  //shadowColor: Colors.transparent,
-                  //forceMaterialTransparency: true,
+            if (state is! LoginSuccess) {
+              context.read<LoginBloc>().add(CheckAuthStatus());
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-                expandedHeight: 230,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: SearchBarWidget(
-                    userName: "Juliana",
-                    onSearch: (query) => print("Buscar: $query"),
-                    onScan: () => print("Escanear producto"),
-                    onFilterProducts: () => print("Filtrar productos"),
-                    onFilterChazas: () => print("Filtrar chazas"),
-                    onToggleSearch:
-                        updateSearchMode, // Permite cambiar la vista
+            final token = (state).userEntity.token;
+
+            context.read<ProductosBloc>().add(LoadProductsEvent(token: token));
+            return BlocBuilder<ProductosBloc, ProductosState>(
+                builder: (context, state) {
+              if (state is ProductosLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: UNChazaTheme.orange,
                   ),
-                ),
-              ),
-              if (isSearchingProducts)
-                BlocBuilder<ProductosBloc, ProductosState>(
-                  builder: (context, state) {
-                    if (state is ProductosLoading) {
-                      return const SliverFillRemaining(
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: UNChazaTheme.orange,
-                          ),
-                        ),
-                      );
-                    } else if (state is ProductosLoaded) {
-                      if (state.productos.isEmpty) {
-                        return const SliverFillRemaining(
-                          child: Center(
-                            child: Text('No hay productos'),
-                          ),
-                        );
-                      }
-                      return SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            final product = state.productos[index];
-                            return ProductCard(
-                              imageUrl:
-                                  "https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt",
-                              productName: product.name,
-                              chazaName: "Chaza",
-                              category: "Comida",
-                              price: product.price as int,
-                              isFavorite: false,
-                              description: product.description,
-                              onFavoritePressed: () =>
-                                  toggleFavorite(index, true),
+                );
+              } else if (state is ProductosError) {
+                return Center(
+                  child: Text('Error cargando productos ${state.exception}'),
+                );
+              } else if (state is ProductosLoaded) {
+                if (_productsToShow.isEmpty) {
+                  _productsToShow = state.productos;
+                }
+              }
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    pinned: false, // No se queda fijo
+                    floating: true,
+                    snap: true, // Se oculta al hacer scroll
+                    backgroundColor: UNChazaTheme.orange,
+                    elevation: 0,
+                    //shadowColor: Colors.transparent,
+                    //forceMaterialTransparency: true,
+
+                    expandedHeight: 230,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: SearchBarWidget(
+                        userName: "Juliana",
+                        onSearch: (query) => print("Buscar: $query"),
+                        onScan: () => print("Escanear producto"),
+                        onFilterProducts: () => print("Filtrar productos"),
+                        onFilterChazas: () => print("Filtrar chazas"),
+                        onToggleSearch:
+                            updateSearchMode, // Permite cambiar la vista
+                      ),
+                    ),
+                  ),
+                  if (isSearchingProducts)
+                    BlocBuilder<ProductosBloc, ProductosState>(
+                      builder: (context, state) {
+                        if (state is ProductosLoading) {
+                          return const SliverFillRemaining(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: UNChazaTheme.orange,
+                              ),
+                            ),
+                          );
+                        } else if (state is ProductosLoaded) {
+                          if (state.productos.isEmpty) {
+                            return const SliverFillRemaining(
+                              child: Center(
+                                child: Text('No hay productos'),
+                              ),
                             );
-                          },
-                          childCount: state.productos.length,
-                        ),
-                      );
-                    } else if (state is ProductosError) {
-                      return SliverFillRemaining(
-                        child: Center(
-                          child: Text(
-                              'Error cargando productos ${state.exception}'),
-                        ),
-                      );
-                    } else {
-                      return const SliverFillRemaining(
-                        child: Center(
-                          child: Text('Error desconocido'),
-                        ),
-                      );
-                    }
-                  },
-                )
-              else
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final chaza = chazas[index];
-                      final ChazaEntity chazaEntity = ChazaEntity(
-                        id: chaza['id'],
-                        nombre: chaza['chazaName'],
-                        descripcion: chaza['description'],
-                      );
+                          }
+                          return SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                final product = state.productos[index];
+                                return ProductCard(
+                                  imageUrl:
+                                      "https://images.crunchbase.com/image/upload/c_thumb,h_256,w_256,f_auto,g_face,z_0.7,q_auto:eco,dpr_1/xh3bkyq1g1yx5rasenzt",
+                                  productName: product.name,
+                                  chazaName: "Chaza",
+                                  category: "Comida",
+                                  price: product.price as int,
+                                  isFavorite: false,
+                                  description: product.description,
+                                  onFavoritePressed: () =>
+                                      toggleFavorite(index, true),
+                                );
+                              },
+                              childCount: state.productos.length,
+                            ),
+                          );
+                        } else if (state is ProductosError) {
+                          return SliverFillRemaining(
+                            child: Center(
+                              child: Text(
+                                  'Error cargando productos ${state.exception}'),
+                            ),
+                          );
+                        } else {
+                          return const SliverFillRemaining(
+                            child: Center(
+                              child: Text('Error desconocido'),
+                            ),
+                          );
+                        }
+                      },
+                    )
+                  else
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final chaza = chazas[index];
+                          final ChazaEntity chazaEntity = ChazaEntity(
+                            id: chaza['id'],
+                            nombre: chaza['chazaName'],
+                            descripcion: chaza['description'],
+                          );
 
-                      return ChazaCard(
-                        isFavorite: chaza['isFavorite'],
-                        isOwner: chaza['isOwner'],
-                        imageUrl: chaza['imageUrl'],
-                        chaza: chazaEntity,
-                        onTap: () {
-                          context.push('/chaza-detail', extra: {
-                            'imageUrl': chaza['imageUrl'],
-                            'chazaName': chaza['chazaName'],
-                            'schedule': chaza['schedule'],
-                            'location': chaza['location'],
-                            'payment': chaza['payment'],
-                            'description': chaza['description'],
-                            'isOwner': chaza['isOwner'],
-                          });
+                          return ChazaCard(
+                            isFavorite: chaza['isFavorite'],
+                            isOwner: chaza['isOwner'],
+                            imageUrl: chaza['imageUrl'],
+                            chaza: chazaEntity,
+                            onTap: () {
+                              context.push('/chaza-detail', extra: {
+                                'imageUrl': chaza['imageUrl'],
+                                'chazaName': chaza['chazaName'],
+                                'schedule': chaza['schedule'],
+                                'location': chaza['location'],
+                                'payment': chaza['payment'],
+                                'description': chaza['description'],
+                                'isOwner': chaza['isOwner'],
+                              });
+                            },
+                            onFavoritePressed: () =>
+                                toggleFavorite(index, false),
+                          );
                         },
-                        onFavoritePressed: () => toggleFavorite(index, false),
-                      );
-                    },
-                    childCount: chazas.length,
-                  ),
-                ),
-            ],
-          );
-        }),
+                        childCount: chazas.length,
+                      ),
+                    ),
+                ],
+              );
+            });
+          },
+        ),
       ),
     );
   }
